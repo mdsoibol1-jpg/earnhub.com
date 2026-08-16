@@ -142,8 +142,23 @@ function askAI(){
     "<br><br>This is the first demo version. Real AI connection will be added next.";
 }
 </script>
-</body>
+<div class="modal" id="aiModal">
+  <div class="modal-box">
+    <h2>🤖 EarnHub AI</h2>
+    <p>What do you want to earn from?</p>
+
+    <input id="aiQuestion" placeholder="Example: I want to earn online">
+
+    <button class="btn primary" style="width:100%;margin-top:10px"
+      onclick="askAI()">Ask AI</button>
+
+    <div id="aiAnswer"
+      style="margin-top:15px;padding:12px;background:#f5f7fb;border-radius:10px;display:none">
+    </div>
+
+    <button class="btn light" style="width:100%;margin-top:8px"
+      onclick="closeAI()">Close</button>
+  </div>
+  ></body>
 </html>
-</script>
-</body>
-</html>
+
