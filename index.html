@@ -92,13 +92,54 @@ footer{padding:30px 6%;background:#fff;text-align:center;color:#7a8495;border-to
 </div>
 
 <script>
-function openModal(){document.getElementById('modal').style.display='flex'}
-function closeModal(){document.getElementById('modal').style.display='none'}
+function openModal(){<script>
+function openModal(){
+  document.getElementById('modal').style.display='flex';
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+}
+
 function signup(){
   const name=document.getElementById('name').value.trim();
-  if(!name){alert('Please enter your name.');return}
-  closeModal(); alert('Welcome, '+name+'! This demo account form is ready. Real login/database will be added next.');
+
+  if(!name){
+    alert('Please enter your name.');
+    return;
+  }
+
+  closeModal();
+  alert('Welcome, '+name+'!');
 }
+
+function openAI(){
+  document.getElementById('aiModal').style.display='flex';
+}
+
+function closeAI(){
+  document.getElementById('aiModal').style.display='none';
+}
+
+function askAI(){
+  const question=document.getElementById('aiQuestion').value.trim();
+  const answer=document.getElementById('aiAnswer');
+
+  if(!question){
+    alert('Please write your question.');
+    return;
+  }
+
+  answer.style.display='block';
+
+  answer.innerHTML=
+    "🤖 <b>EarnHub AI:</b><br><br>"+
+    "Your question: "+question+
+    "<br><br>This is the first demo version. Real AI connection will be added next.";
+}
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
