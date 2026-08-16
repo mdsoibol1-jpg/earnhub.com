@@ -124,22 +124,50 @@ function closeAI(){
   document.getElementById('aiModal').style.display='none';
 }
 
-function askAI(){
-  const question=document.getElementById('aiQuestion').value.trim();
-  const answer=document.getElementById('aiAnswer');
+async function askAI(){
+  const question = document.getElementById('aiQuestion').value.trim();
+  const answer = document.getElementById('aiAnswer');
 
   if(!question){
     alert('Please write your question.');
     return;
   }
 
-  answer.style.display='block';
+  answer.style.display = 'block';
+  answer.innerHTML = "🤖 <b>EarnHub AI:</b><br><br>Thinking...";
 
-  answer.innerHTML=
-    "🤖 <b>EarnHub AI:</b><br><br>"+
-    "Your question: "+question+
-    "<br><br>This is the first demo version. Real AI connection will be added next.";
-}
+  try {
+    const response = await fetch(
+      "https://earnhub-ai.mdsoibol1.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: question
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if(data.success){
+      answer.innerHTML =
+        "🤖 <b>EarnHub AI:</b><br><br>" +
+        data.reply;
+    } else {
+      answer.innerHTML =
+        "❌ AI Error:<br><br>" +
+        (data.error || "Something went wrong.");
+    }
+
+  } catch(error) {
+    answer.innerHTML =
+      "❌ Connection Error:<br><br>" +
+      error.message;
+  }
+
 </script>
 <div class="modal" id="aiModal">
   <div class="modal-box">
