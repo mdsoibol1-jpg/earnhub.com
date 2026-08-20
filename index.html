@@ -1,8 +1,1163 @@
 <!DOCTYPE html>
-<html>
-<head><title>EarnHub</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EarnHub — All-in-One Earning Platform</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#222;
+}
+
+header{
+  background:#111827;
+  color:white;
+  padding:16px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:bold;
+  color:#22c55e;
+}
+
+nav button{
+  padding:10px 16px;
+  margin-left:7px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.login{
+  background:transparent;
+  color:white;
+  border:1px solid #777;
+}
+
+.signup{
+  background:#22c55e;
+  color:white;
+}
+
+.logout{
+  background:#ef4444;
+  color:white;
+}
+
+.hero{
+  background:linear-gradient(135deg,#111827,#1f2937);
+  color:white;
+  text-align:center;
+  padding:70px 20px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  color:#d1d5db;
+  max-width:650px;
+  margin:auto;
+  line-height:1.6;
+}
+
+.wallet{
+  display:inline-block;
+  margin-top:25px;
+  background:#22c55e;
+  padding:14px 25px;
+  border-radius:10px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.container{
+  width:88%;
+  max-width:1200px;
+  margin:40px auto;
+}
+
+.title{
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+.features,
+.stats,
+.tasks{
+  display:grid;
+  gap:20px;
+}
+
+.features{
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+
+.stats{
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+
+.tasks{
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+
+.card,
+.stat,
+.task{
+  background:white;
+  padding:22px;
+  border-radius:14px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p,
+.task p{
+  color:#666;
+  line-height:1.5;
+}
+
+.stat h4{
+  color:#666;
+  margin-bottom:10px;
+}
+
+.stat strong{
+  font-size:27px;
+}
+
+.task h3{
+  margin-bottom:10px;
+}
+
+.reward{
+  color:#16a34a;
+  font-size:20px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.complete{
+  width:100%;
+  padding:11px;
+  border:none;
+  border-radius:8px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+}
+
+.ai{
+  margin-top:30px;
+  padding:25px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+}
+
+.ai button{
+  margin-top:15px;
+  padding:10px 18px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+footer{
+  background:#111827;
+  color:#aaa;
+  text-align:center;
+  padding:25px;
+  margin-top:50px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  padding:20px;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:400px;
+  padding:25px;
+  border-radius:15px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:15px;
+  top:8px;
+  font-size:27px;
+  cursor:pointer;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+.form-btn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:#22c55e;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.switch{
+  text-align:center;
+  margin-top:15px;
+  color:#2563eb;
+  cursor:pointer;
+}
+
+#userArea{
+  display:none;
+  align-items:center;
+}
+
+@media(max-width:600px){
+  .hero h1{
+    font-size:32px;
+  }
+}
+</style>
+</head>
+
 <body>
-<h1>EarnHub</h1>
-<script src="script.js"></script>
+
+<header>
+
+<div class="logo">EarnHub</div>
+
+<nav>
+
+<button
+id="loginButton"
+class="login"
+onclick="openLogin()">
+Login
+</button>
+
+<button
+id="signupButton"
+class="signup"
+onclick="openSignup()">
+Sign Up
+</button>
+
+<div id="userArea">
+
+<span id="usernameDisplay"></span>
+
+<button
+class="logout"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<h1>Earn Money Online With EarnHub</h1>
+
+<p>
+Complete online tasks, find earning opportunities,
+build your skills and grow your online income.
+</p>
+
+<div class="wallet">
+Wallet: $<span id="heroBalance">0.00</span>
+</div>
+
+</section>
+
+
+<div class="container">
+
+<h2 class="title">
+EarnHub Platform
+</h2>
+
+<div class="features">
+
+<div class="card">
+<h3>💼 Freelance</h3>
+<p>Find freelance work and online jobs.</p>
+</div>
+
+<div class="card">
+<h3>📝 Online Tasks</h3>
+<p>Complete simple tasks and earn rewards.</p>
+</div>
+
+<div class="card">
+<h3>🛒 Marketplace</h3>
+<p>Buy and sell products and services.</p>
+</div>
+
+<div class="card">
+<h3>🎥 Creator</h3>
+<p>Create content and grow your audience.</p>
+</div>
+
+<div class="card">
+<h3>🔗 Affiliate</h3>
+<p>Earn commissions through referrals.</p>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+<h2 class="title">
+Dashboard
+</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h4>Balance</h4>
+<strong>$<span id="balance">0.00</span></strong>
+</div>
+
+<div class="stat">
+<h4>Total Earned</h4>
+<strong>$<span id="totalEarned">0.00</span></strong>
+</div>
+
+<div class="stat">
+<h4>Referral Earnings</h4>
+<strong>$<span id="referralEarnings">0.00</span></strong>
+</div>
+
+<div class="stat">
+<h4>Tasks</h4>
+<strong id="taskCount">0</strong>
+</div>
+
+</div>
+
+
+<h2 class="title">
+Available Tasks
+</h2>
+
+<div id="tasksContainer" class="tasks">
+
+<div class="card">
+Loading tasks...
+</div>
+
+</div>
+
+
+<div class="ai">
+
+<h2>🤖 EarnHub AI Assistant</h2>
+
+<p style="margin-top:10px;">
+Need help finding earning opportunities?
+Ask EarnHub AI.
+</p>
+
+<button onclick="openAI()">
+Ask AI
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+© 2026 EarnHub — MVP concept
+</footer>
+
+
+<!-- LOGIN -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-box">
+
+<span
+class="close"
+onclick="closeModal('loginModal')">
+×
+</span>
+
+<h2>Login</h2>
+
+<input
+type="email"
+id="loginEmail"
+placeholder="Email">
+
+<input
+type="password"
+id="loginPassword"
+placeholder="Password">
+
+<button
+class="form-btn"
+onclick="login()">
+Login
+</button>
+
+<div
+class="switch"
+onclick="switchToSignup()">
+Don't have an account? Sign Up
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SIGNUP -->
+
+<div class="modal" id="signupModal">
+
+<div class="modal-box">
+
+<span
+class="close"
+onclick="closeModal('signupModal')">
+×
+</span>
+
+<h2>Create Account</h2>
+
+<input
+type="text"
+id="signupName"
+placeholder="Full Name">
+
+<input
+type="email"
+id="signupEmail"
+placeholder="Email">
+
+<input
+type="password"
+id="signupPassword"
+placeholder="Password">
+
+<button
+class="form-btn"
+onclick="signup()">
+Create Account
+</button>
+
+<div
+class="switch"
+onclick="switchToLogin()">
+Already have an account? Login
+</div>
+
+</div>
+
+</div>
+
+
+<!-- AI -->
+
+<div class="modal" id="aiModal">
+
+<div class="modal-box">
+
+<span
+class="close"
+onclick="closeModal('aiModal')">
+×
+</span>
+
+<h2>🤖 EarnHub AI</h2>
+
+<p style="margin:15px 0;">
+Hello! I am EarnHub AI.
+</p>
+
+<input
+type="text"
+id="aiQuestion"
+placeholder="Ask something...">
+
+<button
+class="form-btn"
+onclick="askAI()">
+Ask AI
+</button>
+
+<div
+id="aiAnswer"
+style="margin-top:15px;">
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   YOUR CLOUDFLARE WORKER
+===================================== */
+
+const API_URL =
+"https://earnhub-api.mdsoibol1.workers.dev";
+
+
+/* =====================================
+   USER
+===================================== */
+
+let currentUser =
+JSON.parse(
+localStorage.getItem("earnhubUser")
+) || null;
+
+
+/* =====================================
+   PAGE LOAD
+===================================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+updateUserUI();
+
+loadTasks();
+
+}
+);
+
+
+/* =====================================
+   LOAD TASKS FROM WORKER
+===================================== */
+
+async function loadTasks(){
+
+const container =
+document.getElementById(
+"tasksContainer"
+);
+
+try{
+
+const response =
+await fetch(
+API_URL + "/api/tasks"
+);
+
+if(!response.ok){
+
+throw new Error(
+"API Error"
+);
+
+}
+
+const data =
+await response.json();
+
+if(
+!data.success ||
+!Array.isArray(data.tasks)
+){
+
+throw new Error(
+"Invalid task data"
+);
+
+}
+
+document.getElementById(
+"taskCount"
+).textContent =
+data.tasks.length;
+
+container.innerHTML = "";
+
+
+data.tasks.forEach(
+function(task){
+
+const div =
+document.createElement(
+"div"
+);
+
+div.className =
+"task";
+
+div.innerHTML = `
+
+<h3>
+${escapeHTML(task.title)}
+</h3>
+
+<p>
+${escapeHTML(task.description)}
+</p>
+
+<div class="reward">
+$${Number(task.reward).toFixed(2)}
+</div>
+
+<button
+class="complete"
+onclick="completeTask(
+${task.id},
+${task.reward}
+)">
+
+Complete Task
+
+</button>
+
+`;
+
+container.appendChild(div);
+
+}
+);
+
+
+}catch(error){
+
+console.error(error);
+
+container.innerHTML = `
+
+<div class="card">
+
+Unable to load tasks.
+
+<br><br>
+
+Please check your internet
+connection or Worker API.
+
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =====================================
+   COMPLETE TASK
+===================================== */
+
+function completeTask(
+id,
+reward
+){
+
+if(!currentUser){
+
+alert(
+"Please login first to complete a task."
+);
+
+openLogin();
+
+return;
+
+}
+
+alert(
+"Task completion system will be connected next.\n\n"
++
+"Task ID: "
++
+id
++
+"\nReward: $"
++
+Number(reward).toFixed(2)
+);
+
+}
+
+
+/* =====================================
+   SIGNUP
+===================================== */
+
+function signup(){
+
+const name =
+document.getElementById(
+"signupName"
+).value.trim();
+
+const email =
+document.getElementById(
+"signupEmail"
+).value.trim();
+
+const password =
+document.getElementById(
+"signupPassword"
+).value;
+
+
+if(
+!name ||
+!email ||
+!password
+){
+
+alert(
+"Please fill all fields."
+);
+
+return;
+
+}
+
+
+const user = {
+
+name:name,
+
+email:email,
+
+balance:0,
+
+total_earned:0,
+
+referral_earnings:0
+
+};
+
+
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(user)
+);
+
+currentUser =
+user;
+
+closeModal(
+"signupModal"
+);
+
+updateUserUI();
+
+alert(
+"Account created successfully!"
+);
+
+}
+
+
+/* =====================================
+   LOGIN
+===================================== */
+
+function login(){
+
+const email =
+document.getElementById(
+"loginEmail"
+).value.trim();
+
+const password =
+document.getElementById(
+"loginPassword"
+).value;
+
+
+if(
+!email ||
+!password
+){
+
+alert(
+"Please enter email and password."
+);
+
+return;
+
+}
+
+
+const user = {
+
+name:
+email.split("@")[0],
+
+email:email,
+
+balance:0,
+
+total_earned:0,
+
+referral_earnings:0
+
+};
+
+
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(user)
+);
+
+currentUser =
+user;
+
+closeModal(
+"loginModal"
+);
+
+updateUserUI();
+
+alert(
+"Login successful!"
+);
+
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+function logout(){
+
+localStorage.removeItem(
+"earnhubUser"
+);
+
+currentUser =
+null;
+
+updateUserUI();
+
+}
+
+
+/* =====================================
+   UPDATE USER UI
+===================================== */
+
+function updateUserUI(){
+
+const loginButton =
+document.getElementById(
+"loginButton"
+);
+
+const signupButton =
+document.getElementById(
+"signupButton"
+);
+
+const userArea =
+document.getElementById(
+"userArea"
+);
+
+const username =
+document.getElementById(
+"usernameDisplay"
+);
+
+
+if(currentUser){
+
+loginButton.style.display =
+"none";
+
+signupButton.style.display =
+"none";
+
+userArea.style.display =
+"flex";
+
+username.textContent =
+"Hi, "
++
+currentUser.name;
+
+updateBalance();
+
+}else{
+
+loginButton.style.display =
+"inline-block";
+
+signupButton.style.display =
+"inline-block";
+
+userArea.style.display =
+"none";
+
+}
+
+}
+
+
+/* =====================================
+   BALANCE
+===================================== */
+
+function updateBalance(){
+
+if(!currentUser)
+return;
+
+
+const balance =
+Number(
+currentUser.balance || 0
+);
+
+const total =
+Number(
+currentUser.total_earned || 0
+);
+
+const referral =
+Number(
+currentUser.referral_earnings || 0
+);
+
+
+document.getElementById(
+"balance"
+).textContent =
+balance.toFixed(2);
+
+
+document.getElementById(
+"heroBalance"
+).textContent =
+balance.toFixed(2);
+
+
+document.getElementById(
+"totalEarned"
+).textContent =
+total.toFixed(2);
+
+
+document.getElementById(
+"referralEarnings"
+).textContent =
+referral.toFixed(2);
+
+}
+
+
+/* =====================================
+   MODALS
+===================================== */
+
+function openLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display =
+"flex";
+
+}
+
+
+function openSignup(){
+
+document.getElementById(
+"signupModal"
+).style.display =
+"flex";
+
+}
+
+
+function openAI(){
+
+document.getElementById(
+"aiModal"
+).style.display =
+"flex";
+
+}
+
+
+function closeModal(id){
+
+document.getElementById(
+id
+).style.display =
+"none";
+
+}
+
+
+function switchToSignup(){
+
+closeModal(
+"loginModal"
+);
+
+openSignup();
+
+}
+
+
+function switchToLogin(){
+
+closeModal(
+"signupModal"
+);
+
+openLogin();
+
+}
+
+
+/* =====================================
+   AI DEMO
+===================================== */
+
+function askAI(){
+
+const question =
+document.getElementById(
+"aiQuestion"
+).value.trim();
+
+const answer =
+document.getElementById(
+"aiAnswer"
+);
+
+
+if(!question){
+
+answer.textContent =
+"Please enter your question.";
+
+return;
+
+}
+
+
+answer.innerHTML =
+
+"<strong>EarnHub AI:</strong>"
++
+"<br><br>"
++
+"Your AI system will be connected "
++
+"in the next step.";
+
+}
+
+
+/* =====================================
+   SECURITY HELPER
+===================================== */
+
+function escapeHTML(text){
+
+const div =
+document.createElement(
+"div"
+);
+
+div.textContent =
+String(text);
+
+return div.innerHTML;
+
+}
+
+
+/* =====================================
+   CLOSE MODAL OUTSIDE
+===================================== */
+
+window.addEventListener(
+"click",
+function(event){
+
+document
+.querySelectorAll(".modal")
+.forEach(
+function(modal){
+
+if(
+event.target === modal
+){
+
+modal.style.display =
+"none";
+
+}
+
+}
+);
+
+}
+);
+
+</script>
+
 </body>
 </html>
