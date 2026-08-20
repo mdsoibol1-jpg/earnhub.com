@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>EarnHub — All-in-One Earning Platform</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -186,6 +188,15 @@ nav button{
   cursor:pointer;
 }
 
+#aiAnswer{
+  background:#f3f4f6;
+  color:#222;
+  padding:15px;
+  border-radius:10px;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+
 footer{
   background:#111827;
   color:#aaa;
@@ -261,10 +272,13 @@ input{
   }
 
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -380,31 +394,54 @@ Dashboard
 <div class="stats">
 
 <div class="stat">
-<h4>Balance</h4>
+
+<h4>
+Balance
+</h4>
+
 <strong>
 $<span id="balance">0.00</span>
 </strong>
+
 </div>
 
+
 <div class="stat">
-<h4>Total Earned</h4>
+
+<h4>
+Total Earned
+</h4>
+
 <strong>
 $<span id="totalEarned">0.00</span>
 </strong>
+
 </div>
 
+
 <div class="stat">
-<h4>Referral Earnings</h4>
+
+<h4>
+Referral Earnings
+</h4>
+
 <strong>
 $<span id="referralEarnings">0.00</span>
 </strong>
+
 </div>
 
+
 <div class="stat">
-<h4>Tasks</h4>
+
+<h4>
+Tasks
+</h4>
+
 <strong id="taskCount">
 0
 </strong>
+
 </div>
 
 </div>
@@ -564,7 +601,7 @@ onclick="closeModal('aiModal')">
 </h2>
 
 <p style="margin:15px 0;">
-Hello! I am EarnHub AI.
+Ask EarnHub AI anything about earning online.
 </p>
 
 <input
@@ -589,6 +626,7 @@ style="margin-top:15px;">
 
 
 <script>
+
 
 /* =====================================
    CLOUDFLARE WORKER
@@ -759,15 +797,11 @@ return;
 }
 
 
-/* Get completed tasks */
-
 const completedTasks =
 JSON.parse(
 localStorage.getItem("completedTasks")
 ) || [];
 
-
-/* Prevent duplicate completion */
 
 if(
 completedTasks.includes(id)
@@ -782,13 +816,9 @@ return;
 }
 
 
-/* Reward */
-
 const taskReward =
 Number(reward) || 0;
 
-
-/* Update balance */
 
 currentUser.balance =
 Number(
@@ -798,8 +828,6 @@ currentUser.balance || 0
 taskReward;
 
 
-/* Update total earned */
-
 currentUser.total_earned =
 Number(
 currentUser.total_earned || 0
@@ -808,8 +836,6 @@ currentUser.total_earned || 0
 taskReward;
 
 
-/* Save user */
-
 localStorage.setItem(
 "earnhubUser",
 JSON.stringify(
@@ -817,8 +843,6 @@ currentUser
 )
 );
 
-
-/* Save completed task */
 
 completedTasks.push(id);
 
@@ -829,8 +853,6 @@ completedTasks
 )
 );
 
-
-/* Update screen */
 
 updateBalance();
 
@@ -850,7 +872,7 @@ taskReward.toFixed(2)
    SIGNUP
 ===================================== */
 
-function signup(){
+async function signup(){
 
 const name =
 document.getElementById(
@@ -883,30 +905,72 @@ return;
 }
 
 
-const user = {
+if(password.length < 6){
+
+alert(
+"Password must be at least 6 characters."
+);
+
+return;
+
+}
+
+
+try{
+
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+action:"signup",
 
 name:name,
 
 email:email,
 
-balance:0,
+password:password
 
-total_earned:0,
+})
 
-referral_earnings:0
+}
+);
 
-};
+
+const data =
+await response.json();
+
+
+if(!data.success){
+
+alert(
+data.error ||
+"Signup failed."
+);
+
+return;
+
+}
+
+
+currentUser =
+data.user;
 
 
 localStorage.setItem(
 "earnhubUser",
 JSON.stringify(
-user
+currentUser
 )
 );
 
-currentUser =
-user;
 
 closeModal(
 "signupModal"
@@ -914,9 +978,21 @@ closeModal(
 
 updateUserUI();
 
+
 alert(
 "Account created successfully!"
 );
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to server."
+);
+
+}
 
 }
 
@@ -925,7 +1001,7 @@ alert(
    LOGIN
 ===================================== */
 
-function login(){
+async function login(){
 
 const email =
 document.getElementById(
@@ -952,31 +1028,59 @@ return;
 }
 
 
-const user = {
+try{
 
-name:
-email.split("@")[0],
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+action:"login",
 
 email:email,
 
-balance:0,
+password:password
 
-total_earned:0,
+})
 
-referral_earnings:0
+}
+);
 
-};
+
+const data =
+await response.json();
+
+
+if(!data.success){
+
+alert(
+data.error ||
+"Login failed."
+);
+
+return;
+
+}
+
+
+currentUser =
+data.user;
 
 
 localStorage.setItem(
 "earnhubUser",
 JSON.stringify(
-user
+currentUser
 )
 );
 
-currentUser =
-user;
 
 closeModal(
 "loginModal"
@@ -984,9 +1088,21 @@ closeModal(
 
 updateUserUI();
 
+
 alert(
 "Login successful!"
 );
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to server."
+);
+
+}
 
 }
 
@@ -1064,8 +1180,6 @@ signupButton.style.display =
 
 userArea.style.display =
 "none";
-
-/* Reset display */
 
 document.getElementById(
 "balance"
@@ -1175,6 +1289,10 @@ document.getElementById(
 ).style.display =
 "flex";
 
+document.getElementById(
+"aiQuestion"
+).focus();
+
 }
 
 
@@ -1211,10 +1329,10 @@ openLogin();
 
 
 /* =====================================
-   AI DEMO
+   REAL EARNHUB AI
 ===================================== */
 
-function askAI(){
+async function askAI(){
 
 const question =
 document.getElementById(
@@ -1238,14 +1356,71 @@ return;
 
 
 answer.innerHTML =
+"🤖 EarnHub AI is thinking...";
 
-"<strong>EarnHub AI:</strong>"
+
+try{
+
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+action:"ai",
+
+message:question
+
+})
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+if(!response.ok || !data.success){
+
+answer.innerHTML =
+"<strong>Error:</strong><br>"
 +
-"<br><br>"
+escapeHTML(
+data.error ||
+"AI request failed."
+);
+
+return;
+
+}
+
+
+answer.innerHTML =
+"<strong>🤖 EarnHub AI:</strong><br><br>"
 +
-"Your AI system will be connected "
+escapeHTML(
+data.reply ||
+"No answer received."
+);
+
+
+}catch(error){
+
+console.error(error);
+
+answer.innerHTML =
+"<strong>Error:</strong><br>"
 +
-"in the next step.";
+"Unable to connect to EarnHub AI.";
+
+}
 
 }
 
@@ -1295,7 +1470,6 @@ modal.style.display =
 );
 
 }
-
 );
 
 </script>
