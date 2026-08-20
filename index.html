@@ -276,9 +276,7 @@ input{
 </style>
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -394,54 +392,31 @@ Dashboard
 <div class="stats">
 
 <div class="stat">
-
-<h4>
-Balance
-</h4>
-
+<h4>Balance</h4>
 <strong>
 $<span id="balance">0.00</span>
 </strong>
-
 </div>
 
-
 <div class="stat">
-
-<h4>
-Total Earned
-</h4>
-
+<h4>Total Earned</h4>
 <strong>
 $<span id="totalEarned">0.00</span>
 </strong>
-
 </div>
 
-
 <div class="stat">
-
-<h4>
-Referral Earnings
-</h4>
-
+<h4>Referral Earnings</h4>
 <strong>
 $<span id="referralEarnings">0.00</span>
 </strong>
-
 </div>
 
-
 <div class="stat">
-
-<h4>
-Tasks
-</h4>
-
+<h4>Tasks</h4>
 <strong id="taskCount">
 0
 </strong>
-
 </div>
 
 </div>
@@ -627,7 +602,6 @@ style="margin-top:15px;">
 
 <script>
 
-
 /* =====================================
    CLOUDFLARE WORKER
 ===================================== */
@@ -737,10 +711,7 @@ $${Number(task.reward).toFixed(2)}
 
 <button
 class="complete"
-onclick="completeTask(
-${task.id},
-${task.reward}
-)">
+onclick="completeTask(${task.id})">
 
 Complete Task
 
@@ -779,10 +750,10 @@ connection or Worker API.
 
 
 /* =====================================
-   COMPLETE TASK
+   COMPLETE TASK — D1
 ===================================== */
 
-function completeTask(id,reward){
+async function completeTask(id){
 
 if(!currentUser){
 
@@ -796,19 +767,16 @@ return;
 
 }
 
+const userId =
+Number(currentUser.id);
 
-const completedTasks =
-JSON.parse(
-localStorage.getItem("completedTasks")
-) || [];
+const taskId =
+Number(id);
 
-
-if(
-completedTasks.includes(id)
-){
+if(!userId){
 
 alert(
-"You already completed this task."
+"User ID not found. Please login again."
 );
 
 return;
@@ -816,24 +784,56 @@ return;
 }
 
 
-const taskReward =
-Number(reward) || 0;
+try{
+
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+action:"complete_task",
+
+userId:userId,
+
+taskId:taskId
+
+})
+
+}
+);
 
 
-currentUser.balance =
-Number(
-currentUser.balance || 0
-)
-+
-taskReward;
+const data =
+await response.json();
 
 
-currentUser.total_earned =
-Number(
-currentUser.total_earned || 0
-)
-+
-taskReward;
+if(
+!response.ok ||
+!data.success
+){
+
+alert(
+data.error ||
+"Unable to complete task."
+);
+
+return;
+
+}
+
+
+/* Updated user from D1 */
+
+currentUser =
+data.user;
 
 
 localStorage.setItem(
@@ -844,15 +844,7 @@ currentUser
 );
 
 
-completedTasks.push(id);
-
-localStorage.setItem(
-"completedTasks",
-JSON.stringify(
-completedTasks
-)
-);
-
+/* Update dashboard */
 
 updateBalance();
 
@@ -862,8 +854,27 @@ alert(
 +
 "Reward: $"
 +
-taskReward.toFixed(2)
+Number(
+data.reward
+).toFixed(2)
++
+"\n\nNew Balance: $"
++
+Number(
+currentUser.balance
+).toFixed(2)
 );
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to EarnHub server."
+);
+
+}
 
 }
 
@@ -925,7 +936,8 @@ API_URL,
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 
 body:JSON.stringify({
@@ -1037,7 +1049,8 @@ API_URL,
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 
 body:JSON.stringify({
@@ -1368,7 +1381,8 @@ API_URL,
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 
 body:JSON.stringify({
@@ -1387,7 +1401,10 @@ const data =
 await response.json();
 
 
-if(!response.ok || !data.success){
+if(
+!response.ok ||
+!data.success
+){
 
 answer.innerHTML =
 "<strong>Error:</strong><br>"
