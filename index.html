@@ -166,6 +166,10 @@ nav button{
   cursor:pointer;
 }
 
+.complete:hover{
+  background:#1d4ed8;
+}
+
 .ai{
   margin-top:30px;
   padding:25px;
@@ -251,9 +255,11 @@ input{
 }
 
 @media(max-width:600px){
+
   .hero h1{
     font-size:32px;
   }
+
 }
 </style>
 </head>
@@ -262,7 +268,9 @@ input{
 
 <header>
 
-<div class="logo">EarnHub</div>
+<div class="logo">
+EarnHub
+</div>
 
 <nav>
 
@@ -299,7 +307,9 @@ Logout
 
 <section class="hero">
 
-<h1>Earn Money Online With EarnHub</h1>
+<h1>
+Earn Money Online With EarnHub
+</h1>
 
 <p>
 Complete online tasks, find earning opportunities,
@@ -323,27 +333,37 @@ EarnHub Platform
 
 <div class="card">
 <h3>💼 Freelance</h3>
-<p>Find freelance work and online jobs.</p>
+<p>
+Find freelance work and online jobs.
+</p>
 </div>
 
 <div class="card">
 <h3>📝 Online Tasks</h3>
-<p>Complete simple tasks and earn rewards.</p>
+<p>
+Complete simple tasks and earn rewards.
+</p>
 </div>
 
 <div class="card">
 <h3>🛒 Marketplace</h3>
-<p>Buy and sell products and services.</p>
+<p>
+Buy and sell products and services.
+</p>
 </div>
 
 <div class="card">
 <h3>🎥 Creator</h3>
-<p>Create content and grow your audience.</p>
+<p>
+Create content and grow your audience.
+</p>
 </div>
 
 <div class="card">
 <h3>🔗 Affiliate</h3>
-<p>Earn commissions through referrals.</p>
+<p>
+Earn commissions through referrals.
+</p>
 </div>
 
 </div>
@@ -361,22 +381,30 @@ Dashboard
 
 <div class="stat">
 <h4>Balance</h4>
-<strong>$<span id="balance">0.00</span></strong>
+<strong>
+$<span id="balance">0.00</span>
+</strong>
 </div>
 
 <div class="stat">
 <h4>Total Earned</h4>
-<strong>$<span id="totalEarned">0.00</span></strong>
+<strong>
+$<span id="totalEarned">0.00</span>
+</strong>
 </div>
 
 <div class="stat">
 <h4>Referral Earnings</h4>
-<strong>$<span id="referralEarnings">0.00</span></strong>
+<strong>
+$<span id="referralEarnings">0.00</span>
+</strong>
 </div>
 
 <div class="stat">
 <h4>Tasks</h4>
-<strong id="taskCount">0</strong>
+<strong id="taskCount">
+0
+</strong>
 </div>
 
 </div>
@@ -386,7 +414,9 @@ Dashboard
 Available Tasks
 </h2>
 
-<div id="tasksContainer" class="tasks">
+<div
+id="tasksContainer"
+class="tasks">
 
 <div class="card">
 Loading tasks...
@@ -397,7 +427,9 @@ Loading tasks...
 
 <div class="ai">
 
-<h2>🤖 EarnHub AI Assistant</h2>
+<h2>
+🤖 EarnHub AI Assistant
+</h2>
 
 <p style="margin-top:10px;">
 Need help finding earning opportunities?
@@ -420,7 +452,9 @@ Ask AI
 
 <!-- LOGIN -->
 
-<div class="modal" id="loginModal">
+<div
+class="modal"
+id="loginModal">
 
 <div class="modal-box">
 
@@ -430,7 +464,9 @@ onclick="closeModal('loginModal')">
 ×
 </span>
 
-<h2>Login</h2>
+<h2>
+Login
+</h2>
 
 <input
 type="email"
@@ -461,7 +497,9 @@ Don't have an account? Sign Up
 
 <!-- SIGNUP -->
 
-<div class="modal" id="signupModal">
+<div
+class="modal"
+id="signupModal">
 
 <div class="modal-box">
 
@@ -471,7 +509,9 @@ onclick="closeModal('signupModal')">
 ×
 </span>
 
-<h2>Create Account</h2>
+<h2>
+Create Account
+</h2>
 
 <input
 type="text"
@@ -507,7 +547,9 @@ Already have an account? Login
 
 <!-- AI -->
 
-<div class="modal" id="aiModal">
+<div
+class="modal"
+id="aiModal">
 
 <div class="modal-box">
 
@@ -517,7 +559,9 @@ onclick="closeModal('aiModal')">
 ×
 </span>
 
-<h2>🤖 EarnHub AI</h2>
+<h2>
+🤖 EarnHub AI
+</h2>
 
 <p style="margin:15px 0;">
 Hello! I am EarnHub AI.
@@ -547,7 +591,7 @@ style="margin-top:15px;">
 <script>
 
 /* =====================================
-   YOUR CLOUDFLARE WORKER
+   CLOUDFLARE WORKER
 ===================================== */
 
 const API_URL =
@@ -581,7 +625,7 @@ loadTasks();
 
 
 /* =====================================
-   LOAD TASKS FROM WORKER
+   LOAD TASKS
 ===================================== */
 
 async function loadTasks(){
@@ -700,10 +744,7 @@ connection or Worker API.
    COMPLETE TASK
 ===================================== */
 
-function completeTask(
-id,
-reward
-){
+function completeTask(id,reward){
 
 if(!currentUser){
 
@@ -717,16 +758,89 @@ return;
 
 }
 
+
+/* Get completed tasks */
+
+const completedTasks =
+JSON.parse(
+localStorage.getItem("completedTasks")
+) || [];
+
+
+/* Prevent duplicate completion */
+
+if(
+completedTasks.includes(id)
+){
+
 alert(
-"Task completion system will be connected next.\n\n"
+"You already completed this task."
+);
+
+return;
+
+}
+
+
+/* Reward */
+
+const taskReward =
+Number(reward) || 0;
+
+
+/* Update balance */
+
+currentUser.balance =
+Number(
+currentUser.balance || 0
+)
 +
-"Task ID: "
+taskReward;
+
+
+/* Update total earned */
+
+currentUser.total_earned =
+Number(
+currentUser.total_earned || 0
+)
 +
-id
+taskReward;
+
+
+/* Save user */
+
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(
+currentUser
+)
+);
+
+
+/* Save completed task */
+
+completedTasks.push(id);
+
+localStorage.setItem(
+"completedTasks",
+JSON.stringify(
+completedTasks
+)
+);
+
+
+/* Update screen */
+
+updateBalance();
+
+
+alert(
+"Task completed successfully! 🎉\n\n"
 +
-"\nReward: $"
+"Reward: $"
 +
-Number(reward).toFixed(2)
+taskReward.toFixed(2)
 );
 
 }
@@ -786,7 +900,9 @@ referral_earnings:0
 
 localStorage.setItem(
 "earnhubUser",
-JSON.stringify(user)
+JSON.stringify(
+user
+)
 );
 
 currentUser =
@@ -854,7 +970,9 @@ referral_earnings:0
 
 localStorage.setItem(
 "earnhubUser",
-JSON.stringify(user)
+JSON.stringify(
+user
+)
 );
 
 currentUser =
@@ -946,6 +1064,28 @@ signupButton.style.display =
 
 userArea.style.display =
 "none";
+
+/* Reset display */
+
+document.getElementById(
+"balance"
+).textContent =
+"0.00";
+
+document.getElementById(
+"heroBalance"
+).textContent =
+"0.00";
+
+document.getElementById(
+"totalEarned"
+).textContent =
+"0.00";
+
+document.getElementById(
+"referralEarnings"
+).textContent =
+"0.00";
 
 }
 
@@ -1155,6 +1295,7 @@ modal.style.display =
 );
 
 }
+
 );
 
 </script>
