@@ -172,6 +172,60 @@ nav button{
   background:#1d4ed8;
 }
 
+.withdraw-box{
+  background:white;
+  padding:25px;
+  margin-top:25px;
+  border-radius:14px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.withdraw-box h2{
+  margin-bottom:10px;
+}
+
+.withdraw-info{
+  color:#666;
+  margin-bottom:15px;
+}
+
+.withdraw-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#22c55e;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.withdraw-btn:hover{
+  background:#16a34a;
+}
+
+.withdraw-item{
+  padding:15px;
+  margin-top:10px;
+  background:#f5f7fb;
+  border-radius:10px;
+}
+
+.pending{
+  color:#f59e0b;
+  font-weight:bold;
+}
+
+.approved{
+  color:#16a34a;
+  font-weight:bold;
+}
+
+.rejected{
+  color:#ef4444;
+  font-weight:bold;
+}
+
 .ai{
   margin-top:30px;
   padding:25px;
@@ -233,7 +287,8 @@ footer{
   cursor:pointer;
 }
 
-input{
+input,
+select{
   width:100%;
   padding:12px;
   margin:7px 0;
@@ -345,37 +400,27 @@ EarnHub Platform
 
 <div class="card">
 <h3>💼 Freelance</h3>
-<p>
-Find freelance work and online jobs.
-</p>
+<p>Find freelance work and online jobs.</p>
 </div>
 
 <div class="card">
 <h3>📝 Online Tasks</h3>
-<p>
-Complete simple tasks and earn rewards.
-</p>
+<p>Complete simple tasks and earn rewards.</p>
 </div>
 
 <div class="card">
 <h3>🛒 Marketplace</h3>
-<p>
-Buy and sell products and services.
-</p>
+<p>Buy and sell products and services.</p>
 </div>
 
 <div class="card">
 <h3>🎥 Creator</h3>
-<p>
-Create content and grow your audience.
-</p>
+<p>Create content and grow your audience.</p>
 </div>
 
 <div class="card">
 <h3>🔗 Affiliate</h3>
-<p>
-Earn commissions through referrals.
-</p>
+<p>Earn commissions through referrals.</p>
 </div>
 
 </div>
@@ -422,7 +467,47 @@ $<span id="referralEarnings">0.00</span>
 </div>
 
 
-<h2 class="title">
+<!-- WITHDRAW -->
+
+<div class="withdraw-box">
+
+<h2>
+💸 Withdraw Money
+</h2>
+
+<p class="withdraw-info">
+Minimum withdrawal: $5.00
+</p>
+
+<button
+class="withdraw-btn"
+onclick="openWithdraw()">
+
+Withdraw Now
+
+</button>
+
+</div>
+
+
+<!-- WITHDRAWAL HISTORY -->
+
+<div class="withdraw-box">
+
+<h2>
+📋 Withdrawal History
+</h2>
+
+<div id="withdrawalHistory">
+
+Login to view your withdrawals.
+
+</div>
+
+</div>
+
+
+<h2 class="title" style="margin-top:35px;">
 Available Tasks
 </h2>
 
@@ -600,6 +685,80 @@ style="margin-top:15px;">
 </div>
 
 
+<!-- WITHDRAWAL -->
+
+<div
+class="modal"
+id="withdrawModal">
+
+<div class="modal-box">
+
+<span
+class="close"
+onclick="closeModal('withdrawModal')">
+×
+</span>
+
+<h2>
+💸 Withdraw Money
+</h2>
+
+<p style="margin:15px 0;color:#666;">
+
+Available Balance:
+$<span id="withdrawBalance">0.00</span>
+
+</p>
+
+<input
+type="number"
+id="withdrawAmount"
+placeholder="Amount"
+min="5"
+step="0.01">
+
+<select id="withdrawMethod">
+
+<option value="">
+Select Method
+</option>
+
+<option value="Binance">
+Binance
+</option>
+
+<option value="USDT">
+USDT
+</option>
+
+<option value="Bank">
+Bank
+</option>
+
+<option value="PayPal">
+PayPal
+</option>
+
+</select>
+
+<input
+type="text"
+id="withdrawAccount"
+placeholder="Account / Wallet Address">
+
+<button
+class="form-btn"
+onclick="submitWithdrawal()">
+
+Submit Withdrawal
+
+</button>
+
+</div>
+
+</div>
+
+
 <script>
 
 /* =====================================
@@ -632,6 +791,10 @@ updateUserUI();
 
 loadTasks();
 
+if(currentUser){
+loadWithdrawals();
+}
+
 }
 );
 
@@ -643,22 +806,16 @@ loadTasks();
 async function loadTasks(){
 
 const container =
-document.getElementById(
-"tasksContainer"
-);
+document.getElementById("tasksContainer");
 
 try{
 
 const response =
-await fetch(
-API_URL + "/api/tasks"
-);
+await fetch(API_URL + "/api/tasks");
 
 if(!response.ok){
 
-throw new Error(
-"API Error"
-);
+throw new Error("API Error");
 
 }
 
@@ -670,27 +827,21 @@ if(
 !Array.isArray(data.tasks)
 ){
 
-throw new Error(
-"Invalid task data"
-);
+throw new Error("Invalid task data");
 
 }
 
-document.getElementById(
-"taskCount"
-).textContent =
+document.getElementById("taskCount")
+.textContent =
 data.tasks.length;
 
 container.innerHTML = "";
-
 
 data.tasks.forEach(
 function(task){
 
 const div =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 div.className =
 "task";
@@ -724,7 +875,6 @@ container.appendChild(div);
 }
 );
 
-
 }catch(error){
 
 console.error(error);
@@ -750,7 +900,7 @@ connection or Worker API.
 
 
 /* =====================================
-   COMPLETE TASK — D1
+   COMPLETE TASK
 ===================================== */
 
 async function completeTask(id){
@@ -783,7 +933,6 @@ return;
 
 }
 
-
 try{
 
 const response =
@@ -793,8 +942,7 @@ API_URL,
 method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -810,10 +958,8 @@ taskId:taskId
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(
 !response.ok ||
@@ -829,42 +975,23 @@ return;
 
 }
 
-
-/* Updated user from D1 */
-
 currentUser =
 data.user;
 
-
 localStorage.setItem(
 "earnhubUser",
-JSON.stringify(
-currentUser
-)
+JSON.stringify(currentUser)
 );
-
-
-/* Update dashboard */
 
 updateBalance();
 
-
 alert(
-"Task completed successfully! 🎉\n\n"
-+
-"Reward: $"
-+
-Number(
-data.reward
-).toFixed(2)
-+
-"\n\nNew Balance: $"
-+
-Number(
-currentUser.balance
-).toFixed(2)
+"Task completed successfully! 🎉\n\n" +
+"Reward: $" +
+Number(data.reward).toFixed(2) +
+"\n\nNew Balance: $" +
+Number(currentUser.balance).toFixed(2)
 );
-
 
 }catch(error){
 
@@ -886,35 +1013,24 @@ alert(
 async function signup(){
 
 const name =
-document.getElementById(
-"signupName"
-).value.trim();
+document.getElementById("signupName")
+.value.trim();
 
 const email =
-document.getElementById(
-"signupEmail"
-).value.trim();
+document.getElementById("signupEmail")
+.value.trim();
 
 const password =
-document.getElementById(
-"signupPassword"
-).value;
+document.getElementById("signupPassword")
+.value;
 
+if(!name || !email || !password){
 
-if(
-!name ||
-!email ||
-!password
-){
-
-alert(
-"Please fill all fields."
-);
+alert("Please fill all fields.");
 
 return;
 
 }
-
 
 if(password.length < 6){
 
@@ -926,7 +1042,6 @@ return;
 
 }
 
-
 try{
 
 const response =
@@ -936,8 +1051,7 @@ API_URL,
 method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -955,10 +1069,8 @@ password:password
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(!data.success){
 
@@ -971,30 +1083,21 @@ return;
 
 }
 
-
 currentUser =
 data.user;
 
-
 localStorage.setItem(
 "earnhubUser",
-JSON.stringify(
-currentUser
-)
+JSON.stringify(currentUser)
 );
 
-
-closeModal(
-"signupModal"
-);
+closeModal("signupModal");
 
 updateUserUI();
-
 
 alert(
 "Account created successfully!"
 );
-
 
 }catch(error){
 
@@ -1016,20 +1119,14 @@ alert(
 async function login(){
 
 const email =
-document.getElementById(
-"loginEmail"
-).value.trim();
+document.getElementById("loginEmail")
+.value.trim();
 
 const password =
-document.getElementById(
-"loginPassword"
-).value;
+document.getElementById("loginPassword")
+.value;
 
-
-if(
-!email ||
-!password
-){
+if(!email || !password){
 
 alert(
 "Please enter email and password."
@@ -1038,7 +1135,6 @@ alert(
 return;
 
 }
-
 
 try{
 
@@ -1049,8 +1145,7 @@ API_URL,
 method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -1066,10 +1161,8 @@ password:password
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(!data.success){
 
@@ -1082,30 +1175,23 @@ return;
 
 }
 
-
 currentUser =
 data.user;
 
-
 localStorage.setItem(
 "earnhubUser",
-JSON.stringify(
-currentUser
-)
+JSON.stringify(currentUser)
 );
 
-
-closeModal(
-"loginModal"
-);
+closeModal("loginModal");
 
 updateUserUI();
 
+loadWithdrawals();
 
 alert(
 "Login successful!"
 );
-
 
 }catch(error){
 
@@ -1126,14 +1212,16 @@ alert(
 
 function logout(){
 
-localStorage.removeItem(
-"earnhubUser"
-);
+localStorage.removeItem("earnhubUser");
 
-currentUser =
-null;
+currentUser = null;
 
 updateUserUI();
+
+document.getElementById(
+"withdrawalHistory"
+).textContent =
+"Login to view your withdrawals.";
 
 }
 
@@ -1145,25 +1233,16 @@ updateUserUI();
 function updateUserUI(){
 
 const loginButton =
-document.getElementById(
-"loginButton"
-);
+document.getElementById("loginButton");
 
 const signupButton =
-document.getElementById(
-"signupButton"
-);
+document.getElementById("signupButton");
 
 const userArea =
-document.getElementById(
-"userArea"
-);
+document.getElementById("userArea");
 
 const username =
-document.getElementById(
-"usernameDisplay"
-);
-
+document.getElementById("usernameDisplay");
 
 if(currentUser){
 
@@ -1177,9 +1256,7 @@ userArea.style.display =
 "flex";
 
 username.textContent =
-"Hi, "
-+
-currentUser.name;
+"Hi, " + currentUser.name;
 
 updateBalance();
 
@@ -1194,25 +1271,17 @@ signupButton.style.display =
 userArea.style.display =
 "none";
 
-document.getElementById(
-"balance"
-).textContent =
-"0.00";
+document.getElementById("balance")
+.textContent = "0.00";
 
-document.getElementById(
-"heroBalance"
-).textContent =
-"0.00";
+document.getElementById("heroBalance")
+.textContent = "0.00";
 
-document.getElementById(
-"totalEarned"
-).textContent =
-"0.00";
+document.getElementById("totalEarned")
+.textContent = "0.00";
 
-document.getElementById(
-"referralEarnings"
-).textContent =
-"0.00";
+document.getElementById("referralEarnings")
+.textContent = "0.00";
 
 }
 
@@ -1228,45 +1297,350 @@ function updateBalance(){
 if(!currentUser)
 return;
 
-
 const balance =
-Number(
-currentUser.balance || 0
-);
+Number(currentUser.balance || 0);
 
 const total =
-Number(
-currentUser.total_earned || 0
-);
+Number(currentUser.total_earned || 0);
 
 const referral =
-Number(
-currentUser.referral_earnings || 0
-);
+Number(currentUser.referral_earnings || 0);
 
-
-document.getElementById(
-"balance"
-).textContent =
+document.getElementById("balance")
+.textContent =
 balance.toFixed(2);
 
-
-document.getElementById(
-"heroBalance"
-).textContent =
+document.getElementById("heroBalance")
+.textContent =
 balance.toFixed(2);
 
-
-document.getElementById(
-"totalEarned"
-).textContent =
+document.getElementById("totalEarned")
+.textContent =
 total.toFixed(2);
 
+document.getElementById("referralEarnings")
+.textContent =
+referral.toFixed(2);
+
+}
+
+
+/* =====================================
+   WITHDRAW OPEN
+===================================== */
+
+function openWithdraw(){
+
+if(!currentUser){
+
+alert(
+"Please login first."
+);
+
+openLogin();
+
+return;
+
+}
 
 document.getElementById(
-"referralEarnings"
+"withdrawBalance"
 ).textContent =
-referral.toFixed(2);
+Number(currentUser.balance || 0)
+.toFixed(2);
+
+document.getElementById(
+"withdrawModal"
+).style.display =
+"flex";
+
+loadWithdrawals();
+
+}
+
+
+/* =====================================
+   SUBMIT WITHDRAWAL
+===================================== */
+
+async function submitWithdrawal(){
+
+if(!currentUser){
+
+alert(
+"Please login first."
+);
+
+return;
+
+}
+
+const amount =
+Number(
+document.getElementById(
+"withdrawAmount"
+).value
+);
+
+const method =
+document.getElementById(
+"withdrawMethod"
+).value;
+
+const account =
+document.getElementById(
+"withdrawAccount"
+).value.trim();
+
+if(!amount || amount < 5){
+
+alert(
+"Minimum withdrawal is $5.00"
+);
+
+return;
+
+}
+
+if(
+amount >
+Number(currentUser.balance || 0)
+){
+
+alert(
+"Insufficient balance."
+);
+
+return;
+
+}
+
+if(!method){
+
+alert(
+"Please select a withdrawal method."
+);
+
+return;
+
+}
+
+if(!account){
+
+alert(
+"Please enter your account or wallet address."
+);
+
+return;
+
+}
+
+try{
+
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+action:"withdraw",
+
+userId:Number(currentUser.id),
+
+amount:amount,
+
+method:method,
+
+account:account
+
+})
+
+}
+);
+
+const data =
+await response.json();
+
+if(
+!response.ok ||
+!data.success
+){
+
+alert(
+data.error ||
+"Withdrawal failed."
+);
+
+return;
+
+}
+
+currentUser =
+data.user;
+
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(currentUser)
+);
+
+updateBalance();
+
+document.getElementById(
+"withdrawAmount"
+).value = "";
+
+document.getElementById(
+"withdrawMethod"
+).value = "";
+
+document.getElementById(
+"withdrawAccount"
+).value = "";
+
+closeModal("withdrawModal");
+
+alert(
+"Withdrawal request submitted successfully! 💸"
+);
+
+loadWithdrawals();
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to withdrawal server."
+);
+
+}
+
+}
+
+
+/* =====================================
+   WITHDRAWAL HISTORY
+===================================== */
+
+async function loadWithdrawals(){
+
+const box =
+document.getElementById(
+"withdrawalHistory"
+);
+
+if(!currentUser){
+
+box.textContent =
+"Login to view your withdrawals.";
+
+return;
+
+}
+
+try{
+
+const response =
+await fetch(
+API_URL +
+"?action=withdrawals&userId=" +
+encodeURIComponent(
+currentUser.id
+)
+);
+
+const data =
+await response.json();
+
+if(!data.success){
+
+box.textContent =
+"Unable to load withdrawal history.";
+
+return;
+
+}
+
+if(
+!data.withdrawals ||
+data.withdrawals.length === 0
+){
+
+box.textContent =
+"No withdrawals yet.";
+
+return;
+
+}
+
+box.innerHTML = "";
+
+data.withdrawals.forEach(
+function(item){
+
+const div =
+document.createElement("div");
+
+div.className =
+"withdraw-item";
+
+const status =
+String(
+item.status || "pending"
+).toLowerCase();
+
+div.innerHTML = `
+
+<strong>
+$${Number(item.amount).toFixed(2)}
+</strong>
+
+<br>
+
+Method:
+${escapeHTML(item.method)}
+
+<br>
+
+Account:
+${escapeHTML(item.account)}
+
+<br>
+
+Status:
+
+<span class="${escapeHTML(status)}">
+${escapeHTML(status)}
+</span>
+
+<br>
+
+<small>
+${escapeHTML(item.created_at || "")}
+</small>
+
+`;
+
+box.appendChild(div);
+
+}
+);
+
+}catch(error){
+
+console.error(error);
+
+box.textContent =
+"Unable to load withdrawal history.";
+
+}
 
 }
 
@@ -1284,7 +1658,6 @@ document.getElementById(
 
 }
 
-
 function openSignup(){
 
 document.getElementById(
@@ -1293,7 +1666,6 @@ document.getElementById(
 "flex";
 
 }
-
 
 function openAI(){
 
@@ -1308,33 +1680,25 @@ document.getElementById(
 
 }
 
-
 function closeModal(id){
 
-document.getElementById(
-id
-).style.display =
+document.getElementById(id)
+.style.display =
 "none";
 
 }
 
-
 function switchToSignup(){
 
-closeModal(
-"loginModal"
-);
+closeModal("loginModal");
 
 openSignup();
 
 }
 
-
 function switchToLogin(){
 
-closeModal(
-"signupModal"
-);
+closeModal("signupModal");
 
 openLogin();
 
@@ -1342,7 +1706,7 @@ openLogin();
 
 
 /* =====================================
-   REAL EARNHUB AI
+   AI
 ===================================== */
 
 async function askAI(){
@@ -1357,7 +1721,6 @@ document.getElementById(
 "aiAnswer"
 );
 
-
 if(!question){
 
 answer.textContent =
@@ -1367,10 +1730,8 @@ return;
 
 }
 
-
 answer.innerHTML =
 "🤖 EarnHub AI is thinking...";
-
 
 try{
 
@@ -1396,10 +1757,8 @@ message:question
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(
 !response.ok ||
@@ -1407,8 +1766,7 @@ if(
 ){
 
 answer.innerHTML =
-"<strong>Error:</strong><br>"
-+
+"<strong>Error:</strong><br>" +
 escapeHTML(
 data.error ||
 "AI request failed."
@@ -1418,23 +1776,19 @@ return;
 
 }
 
-
 answer.innerHTML =
-"<strong>🤖 EarnHub AI:</strong><br><br>"
-+
+"<strong>🤖 EarnHub AI:</strong><br><br>" +
 escapeHTML(
 data.reply ||
 "No answer received."
 );
-
 
 }catch(error){
 
 console.error(error);
 
 answer.innerHTML =
-"<strong>Error:</strong><br>"
-+
+"<strong>Error:</strong><br>" +
 "Unable to connect to EarnHub AI.";
 
 }
@@ -1443,15 +1797,13 @@ answer.innerHTML =
 
 
 /* =====================================
-   SECURITY HELPER
+   SECURITY
 ===================================== */
 
 function escapeHTML(text){
 
 const div =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 div.textContent =
 String(text);
@@ -1474,9 +1826,7 @@ document
 .forEach(
 function(modal){
 
-if(
-event.target === modal
-){
+if(event.target === modal){
 
 modal.style.display =
 "none";
