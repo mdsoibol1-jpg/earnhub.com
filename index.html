@@ -7,6 +7,7 @@
 <title>EarnHub — All-in-One Earning Platform</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -171,6 +172,10 @@ nav button{
   background:#1d4ed8;
 }
 
+/* =========================
+   WITHDRAW
+========================= */
+
 .withdraw-card{
   background:white;
   padding:25px;
@@ -307,404 +312,497 @@ footer{
   nav button{
     padding:8px 10px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
-  <div class="logo">
-    EarnHub
-  </div>
+<div class="logo">
+EarnHub
+</div>
 
-  <nav>
+<nav>
 
-    <button
-      id="loginButton"
-      class="login"
-      onclick="openLogin()">
-      Login
-    </button>
+<button
+id="loginButton"
+class="login"
+onclick="openLogin()">
+Login
+</button>
 
-    <button
-      id="signupButton"
-      class="signup"
-      onclick="openSignup()">
-      Sign Up
-    </button>
+<button
+id="signupButton"
+class="signup"
+onclick="openSignup()">
+Sign Up
+</button>
 
-    <div id="userArea">
+<div id="userArea">
 
-      <span id="usernameDisplay"></span>
+<span id="usernameDisplay"></span>
 
-      <button
-        class="logout"
-        onclick="logout()">
-        Logout
-      </button>
+<button
+class="logout"
+onclick="logout()">
+Logout
+</button>
 
-    </div>
+</div>
 
-  </nav>
+</nav>
 
 </header>
 
 
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero">
 
-  <h1>
-    Earn Money Online With EarnHub
-  </h1>
+<h1>
+Earn Money Online With EarnHub
+</h1>
 
-  <p>
-    Complete online tasks, find earning opportunities,
-    build your skills and grow your online income.
-  </p>
+<p>
+Complete online tasks, find earning opportunities,
+build your skills and grow your online income.
+</p>
 
-  <div class="wallet">
-    Wallet: $<span id="heroBalance">0.00</span>
-  </div>
+<div class="wallet">
+Wallet: $<span id="heroBalance">0.00</span>
+</div>
 
 </section>
 
 
+<!-- =========================
+     PLATFORM
+========================= -->
+
 <div class="container">
 
-  <h2 class="title">
-    EarnHub Platform
-  </h2>
+<h2 class="title">
+EarnHub Platform
+</h2>
 
-  <div class="features">
+<div class="features">
 
-    <div class="card">
-      <h3>💼 Freelance</h3>
-      <p>
-        Find freelance work and online jobs.
-      </p>
-    </div>
+<div class="card">
+<h3>💼 Freelance</h3>
+<p>
+Find freelance work and online jobs.
+</p>
+</div>
 
-    <div class="card">
-      <h3>📝 Online Tasks</h3>
-      <p>
-        Complete simple tasks and earn rewards.
-      </p>
-    </div>
+<div class="card">
+<h3>📝 Online Tasks</h3>
+<p>
+Complete simple tasks and earn rewards.
+</p>
+</div>
 
-    <div class="card">
-      <h3>🛒 Marketplace</h3>
-      <p>
-        Buy and sell products and services.
-      </p>
-    </div>
+<div class="card">
+<h3>🛒 Marketplace</h3>
+<p>
+Buy and sell products and services.
+</p>
+</div>
 
-    <div class="card">
-      <h3>🎥 Creator</h3>
-      <p>
-        Create content and grow your audience.
-      </p>
-    </div>
+<div class="card">
+<h3>🎥 Creator</h3>
+<p>
+Create content and grow your audience.
+</p>
+</div>
 
-    <div class="card">
-      <h3>🔗 Affiliate</h3>
-      <p>
-        Earn commissions through referrals.
-      </p>
-    </div>
+<div class="card">
+<h3>🔗 Affiliate</h3>
+<p>
+Earn commissions through referrals.
+</p>
+</div>
 
-  </div>
+</div>
 
 </div>
 
 
+<!-- =========================
+     DASHBOARD
+========================= -->
+
 <div class="container">
 
-  <h2 class="title">
-    Dashboard
-  </h2>
+<h2 class="title">
+Dashboard
+</h2>
 
-  <div class="stats">
+<div class="stats">
 
-    <div class="stat">
-      <h4>Balance</h4>
-      <strong>
-        $<span id="balance">0.00</span>
-      </strong>
-    </div>
+<div class="stat">
 
-    <div class="stat">
-      <h4>Total Earned</h4>
-      <strong>
-        $<span id="totalEarned">0.00</span>
-      </strong>
-    </div>
+<h4>
+Balance
+</h4>
 
-    <div class="stat">
-      <h4>Referral Earnings</h4>
-      <strong>
-        $<span id="referralEarnings">0.00</span>
-      </strong>
-    </div>
+<strong>
+$<span id="balance">0.00</span>
+</strong>
 
-    <div class="stat">
-      <h4>Tasks</h4>
-      <strong id="taskCount">
-        0
-      </strong>
-    </div>
+</div>
 
-  </div>
+<div class="stat">
+
+<h4>
+Total Earned
+</h4>
+
+<strong>
+$<span id="totalEarned">0.00</span>
+</strong>
+
+</div>
+
+<div class="stat">
+
+<h4>
+Referral Earnings
+</h4>
+
+<strong>
+$<span id="referralEarnings">0.00</span>
+</strong>
+
+</div>
+
+<div class="stat">
+
+<h4>
+Tasks
+</h4>
+
+<strong id="taskCount">
+0
+</strong>
+
+</div>
+
+</div>
 
 </div>
 
 
+<!-- =========================
+     WITHDRAW
+========================= -->
+
 <div class="container">
 
-  <h2 class="title">
-    💰 Withdraw Money
-  </h2>
+<h2 class="title">
+💰 Withdraw Money
+</h2>
 
-  <div class="withdraw-card">
+<div class="withdraw-card">
 
-    <div class="withdraw-balance">
+<div class="withdraw-balance">
 
-      Available Balance:
-      <br>
+Available Balance:
 
-      <strong>
-        $<span id="withdrawBalance">0.00</span>
-      </strong>
+<br>
 
-    </div>
-
-    <select id="withdrawMethod">
-
-      <option value="">
-        Select Payment Method
-      </option>
-
-      <option value="bKash">
-        bKash
-      </option>
-
-      <option value="Nagad">
-        Nagad
-      </option>
-
-      <option value="Binance">
-        Binance
-      </option>
-
-      <option value="PayPal">
-        PayPal
-      </option>
-
-      <option value="Bank">
-        Bank
-      </option>
-
-    </select>
-
-    <input
-      type="text"
-      id="withdrawAccount"
-      placeholder="bKash / Nagad Number / Wallet / Account">
-
-    <input
-      type="number"
-      id="withdrawAmount"
-      placeholder="Amount"
-      min="1"
-      step="0.01">
-
-    <button
-      class="form-btn"
-      onclick="withdrawMoney()">
-      Request Withdrawal
-    </button>
-
-  </div>
+<strong>
+$<span id="withdrawBalance">0.00</span>
+</strong>
 
 </div>
 
 
-<div class="container">
+<!-- PAYMENT METHOD -->
 
-  <h2 class="title">
-    Available Tasks
-  </h2>
+<select id="withdrawMethod">
 
-  <div
-    id="tasksContainer"
-    class="tasks">
+<option value="">
+Select Payment Method
+</option>
 
-    <div class="card">
-      Loading tasks...
-    </div>
+<option value="bKash">
+bKash
+</option>
 
-  </div>
+<option value="Nagad">
+Nagad
+</option>
+
+<option value="Binance">
+Binance
+</option>
+
+<option value="PayPal">
+PayPal
+</option>
+
+<option value="Bank">
+Bank
+</option>
+
+</select>
 
 
-  <div class="ai">
+<!-- ACCOUNT -->
 
-    <h2>
-      🤖 EarnHub AI Assistant
-    </h2>
+<input
+type="text"
+id="withdrawAccount"
+placeholder="bKash / Nagad Number / Wallet / Account"
+>
 
-    <p style="margin-top:10px;">
-      Need help finding earning opportunities?
-      Ask EarnHub AI.
-    </p>
 
-    <button onclick="openAI()">
-      Ask AI
-    </button>
+<!-- AMOUNT -->
 
-  </div>
+<input
+type="number"
+id="withdrawAmount"
+placeholder="Amount"
+min="1"
+step="0.01"
+>
+
+
+<button
+class="form-btn"
+onclick="withdrawMoney()">
+
+Request Withdrawal
+
+</button>
 
 </div>
 
+</div>
+
+
+<!-- =========================
+     TASKS
+========================= -->
+
+<div class="container">
+
+<h2 class="title">
+Available Tasks
+</h2>
+
+<div
+id="tasksContainer"
+class="tasks">
+
+<div class="card">
+Loading tasks...
+</div>
+
+</div>
+
+
+<!-- =========================
+     AI
+========================= -->
+
+<div class="ai">
+
+<h2>
+🤖 EarnHub AI Assistant
+</h2>
+
+<p style="margin-top:10px;">
+Need help finding earning opportunities?
+Ask EarnHub AI.
+</p>
+
+<button onclick="openAI()">
+Ask AI
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
-  © 2026 EarnHub — MVP concept
+
+© 2026 EarnHub — MVP concept
+
 </footer>
 
 
-<!-- LOGIN MODAL -->
+<!-- =========================
+     LOGIN MODAL
+========================= -->
 
 <div
-  class="modal"
-  id="loginModal">
+class="modal"
+id="loginModal">
 
-  <div class="modal-box">
+<div class="modal-box">
 
-    <span
-      class="close"
-      onclick="closeModal('loginModal')">
-      ×
-    </span>
+<span
+class="close"
+onclick="closeModal('loginModal')">
+×
+</span>
 
-    <h2>
-      Login
-    </h2>
+<h2>
+Login
+</h2>
 
-    <input
-      type="email"
-      id="loginEmail"
-      placeholder="Email">
+<input
+type="email"
+id="loginEmail"
+placeholder="Email"
+>
 
-    <input
-      type="password"
-      id="loginPassword"
-      placeholder="Password">
+<input
+type="password"
+id="loginPassword"
+placeholder="Password"
+>
 
-    <button
-      class="form-btn"
-      onclick="login()">
-      Login
-    </button>
+<button
+class="form-btn"
+onclick="login()">
+Login
+</button>
 
-    <div
-      class="switch"
-      onclick="switchToSignup()">
-      Don't have an account? Sign Up
-    </div>
+<div
+class="switch"
+onclick="switchToSignup()">
 
-  </div>
+Don't have an account?
+Sign Up
+
+</div>
+
+</div>
 
 </div>
 
 
-<!-- SIGNUP MODAL -->
+<!-- =========================
+     SIGNUP MODAL
+========================= -->
 
 <div
-  class="modal"
-  id="signupModal">
+class="modal"
+id="signupModal">
 
-  <div class="modal-box">
+<div class="modal-box">
 
-    <span
-      class="close"
-      onclick="closeModal('signupModal')">
-      ×
-    </span>
+<span
+class="close"
+onclick="closeModal('signupModal')">
+×
+</span>
 
-    <h2>
-      Create Account
-    </h2>
+<h2>
+Create Account
+</h2>
 
-    <input
-      type="text"
-      id="signupName"
-      placeholder="Full Name">
+<input
+type="text"
+id="signupName"
+placeholder="Full Name"
+>
 
-    <input
-      type="email"
-      id="signupEmail"
-      placeholder="Email">
+<input
+type="email"
+id="signupEmail"
+placeholder="Email"
+>
 
-    <input
-      type="password"
-      id="signupPassword"
-      placeholder="Password">
+<input
+type="password"
+id="signupPassword"
+placeholder="Password"
+>
 
-    <button
-      class="form-btn"
-      onclick="signup()">
-      Create Account
-    </button>
+<button
+class="form-btn"
+onclick="signup()">
 
-    <div
-      class="switch"
-      onclick="switchToLogin()">
-      Already have an account? Login
-    </div>
+Create Account
 
-  </div>
+</button>
+
+<div
+class="switch"
+onclick="switchToLogin()">
+
+Already have an account?
+Login
+
+</div>
+
+</div>
 
 </div>
 
 
-<!-- AI MODAL -->
+<!-- =========================
+     AI MODAL
+========================= -->
 
 <div
-  class="modal"
-  id="aiModal">
+class="modal"
+id="aiModal">
 
-  <div class="modal-box">
+<div class="modal-box">
 
-    <span
-      class="close"
-      onclick="closeModal('aiModal')">
-      ×
-    </span>
+<span
+class="close"
+onclick="closeModal('aiModal')">
+×
+</span>
 
-    <h2>
-      🤖 EarnHub AI
-    </h2>
+<h2>
+🤖 EarnHub AI
+</h2>
 
-    <p style="margin:15px 0;">
-      Ask EarnHub AI anything about earning online.
-    </p>
+<p style="margin:15px 0;">
+Ask EarnHub AI anything about earning online.
+</p>
 
-    <input
-      type="text"
-      id="aiQuestion"
-      placeholder="Ask something...">
+<input
+type="text"
+id="aiQuestion"
+placeholder="Ask something..."
+>
 
-    <button
-      class="form-btn"
-      onclick="askAI()">
-      Ask AI
-    </button>
+<button
+class="form-btn"
+onclick="askAI()">
 
-    <div
-      id="aiAnswer"
-      style="margin-top:15px;">
-    </div>
+Ask AI
 
-  </div>
+</button>
+
+<div
+id="aiAnswer"
+style="margin-top:15px;">
+</div>
+
+</div>
 
 </div>
 
@@ -716,7 +814,7 @@ footer{
 ===================================== */
 
 const API_URL =
-  "https://earnhub-api.mdsoibol1.workers.dev";
+"https://earnhub-api.mdsoibol1.workers.dev";
 
 
 /* =====================================
@@ -724,9 +822,9 @@ const API_URL =
 ===================================== */
 
 let currentUser =
-  JSON.parse(
-    localStorage.getItem("earnhubUser")
-  ) || null;
+JSON.parse(
+localStorage.getItem("earnhubUser")
+) || null;
 
 
 /* =====================================
@@ -734,13 +832,14 @@ let currentUser =
 ===================================== */
 
 document.addEventListener(
-  "DOMContentLoaded",
-  function(){
+"DOMContentLoaded",
+function(){
 
-    updateUserUI();
-    loadTasks();
+updateUserUI();
 
-  }
+loadTasks();
+
+}
 );
 
 
@@ -750,86 +849,109 @@ document.addEventListener(
 
 async function loadTasks(){
 
-  const container =
-    document.getElementById(
-      "tasksContainer"
-    );
+const container =
+document.getElementById(
+"tasksContainer"
+);
 
-  try{
+try{
 
-    const response =
-      await fetch(
-        API_URL + "/api/tasks"
-      );
+const response =
+await fetch(
+API_URL + "/api/tasks"
+);
 
-    if(!response.ok){
-      throw new Error("API Error");
-    }
+if(!response.ok){
 
-    const data =
-      await response.json();
+throw new Error(
+"API Error"
+);
 
-    if(
-      !data.success ||
-      !Array.isArray(data.tasks)
-    ){
-      throw new Error("Invalid task data");
-    }
+}
 
-    document.getElementById(
-      "taskCount"
-    ).textContent =
-      data.tasks.length;
+const data =
+await response.json();
 
-    container.innerHTML = "";
+if(
+!data.success ||
+!Array.isArray(data.tasks)
+){
 
-    data.tasks.forEach(
-      function(task){
+throw new Error(
+"Invalid task data"
+);
 
-        const div =
-          document.createElement("div");
+}
 
-        div.className = "task";
+document.getElementById(
+"taskCount"
+).textContent =
+data.tasks.length;
 
-        div.innerHTML = `
-          <h3>
-            ${escapeHTML(task.title)}
-          </h3>
+container.innerHTML = "";
 
-          <p>
-            ${escapeHTML(task.description)}
-          </p>
 
-          <div class="reward">
-            $${Number(task.reward).toFixed(2)}
-          </div>
+data.tasks.forEach(
+function(task){
 
-          <button
-            class="complete"
-            onclick="completeTask(${task.id})">
-            Complete Task
-          </button>
-        `;
+const div =
+document.createElement(
+"div"
+);
 
-        container.appendChild(div);
+div.className =
+"task";
 
-      }
-    );
+div.innerHTML = `
 
-  }catch(error){
+<h3>
+${escapeHTML(task.title)}
+</h3>
 
-    console.error(error);
+<p>
+${escapeHTML(task.description)}
+</p>
 
-    container.innerHTML = `
-      <div class="card">
-        Unable to load tasks.
-        <br><br>
-        Please check your internet connection
-        or Worker API.
-      </div>
-    `;
+<div class="reward">
+$${Number(task.reward).toFixed(2)}
+</div>
 
-  }
+<button
+class="complete"
+onclick="completeTask(${task.id})">
+
+Complete Task
+
+</button>
+
+`;
+
+container.appendChild(div);
+
+}
+);
+
+
+}catch(error){
+
+console.error(error);
+
+container.innerHTML = `
+
+<div class="card">
+
+Unable to load tasks.
+
+<br><br>
+
+Please check your internet
+connection or Worker API.
+
+</div>
+
+`;
+
+}
 
 }
 
@@ -840,98 +962,106 @@ async function loadTasks(){
 
 async function completeTask(id){
 
-  if(!currentUser){
+if(!currentUser){
 
-    alert(
-      "Please login first to complete a task."
-    );
+alert(
+"Please login first to complete a task."
+);
 
-    openLogin();
-    return;
+openLogin();
 
-  }
+return;
 
-  const userId =
-    Number(currentUser.id);
+}
 
-  const taskId =
-    Number(id);
+const userId =
+Number(currentUser.id);
 
-  if(!userId){
+const taskId =
+Number(id);
 
-    alert(
-      "User ID not found. Please login again."
-    );
+if(!userId){
 
-    return;
+alert(
+"User ID not found. Please login again."
+);
 
-  }
+return;
 
-  try{
+}
 
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
+try{
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
 
-          body:JSON.stringify({
-            action:"complete_task",
-            userId:userId,
-            taskId:taskId
-          })
-        }
-      );
+headers:{
+"Content-Type":
+"application/json"
+},
 
-    const data =
-      await response.json();
+body:JSON.stringify({
 
-    if(
-      !response.ok ||
-      !data.success
-    ){
+action:"complete_task",
 
-      alert(
-        data.error ||
-        "Unable to complete task."
-      );
+userId:userId,
 
-      return;
+taskId:taskId
 
-    }
+})
 
-    currentUser =
-      data.user;
+}
+);
 
-    localStorage.setItem(
-      "earnhubUser",
-      JSON.stringify(currentUser)
-    );
+const data =
+await response.json();
 
-    updateBalance();
+if(
+!response.ok ||
+!data.success
+){
 
-    alert(
-      "Task completed successfully! 🎉\n\n" +
-      "Reward: $" +
-      Number(data.reward).toFixed(2) +
-      "\n\nNew Balance: $" +
-      Number(currentUser.balance).toFixed(2)
-    );
+alert(
+data.error ||
+"Unable to complete task."
+);
 
-  }catch(error){
+return;
 
-    console.error(error);
+}
 
-    alert(
-      "Unable to connect to EarnHub server."
-    );
+currentUser =
+data.user;
 
-  }
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(
+currentUser
+)
+);
+
+updateBalance();
+
+alert(
+"Task completed successfully! 🎉\n\n" +
+"Reward: $" +
+Number(data.reward).toFixed(2) +
+"\n\nNew Balance: $" +
+Number(currentUser.balance).toFixed(2)
+);
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to EarnHub server."
+);
+
+}
 
 }
 
@@ -942,106 +1072,116 @@ async function completeTask(id){
 
 async function signup(){
 
-  const name =
-    document.getElementById(
-      "signupName"
-    ).value.trim();
+const name =
+document.getElementById(
+"signupName"
+).value.trim();
 
-  const email =
-    document.getElementById(
-      "signupEmail"
-    ).value.trim();
+const email =
+document.getElementById(
+"signupEmail"
+).value.trim();
 
-  const password =
-    document.getElementById(
-      "signupPassword"
-    ).value;
+const password =
+document.getElementById(
+"signupPassword"
+).value;
 
-  if(
-    !name ||
-    !email ||
-    !password
-  ){
+if(
+!name ||
+!email ||
+!password
+){
 
-    alert(
-      "Please fill all fields."
-    );
+alert(
+"Please fill all fields."
+);
 
-    return;
+return;
 
-  }
+}
 
-  if(password.length < 6){
+if(password.length < 6){
 
-    alert(
-      "Password must be at least 6 characters."
-    );
+alert(
+"Password must be at least 6 characters."
+);
 
-    return;
+return;
 
-  }
+}
 
-  try{
+try{
 
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+headers:{
+"Content-Type":
+"application/json"
+},
 
-          body:JSON.stringify({
-            action:"signup",
-            name:name,
-            email:email,
-            password:password
-          })
-        }
-      );
+body:JSON.stringify({
 
-    const data =
-      await response.json();
+action:"signup",
 
-    if(!data.success){
+name:name,
 
-      alert(
-        data.error ||
-        "Signup failed."
-      );
+email:email,
 
-      return;
+password:password
 
-    }
+})
 
-    currentUser =
-      data.user;
+}
+);
 
-    localStorage.setItem(
-      "earnhubUser",
-      JSON.stringify(currentUser)
-    );
+const data =
+await response.json();
 
-    closeModal("signupModal");
+if(!data.success){
 
-    updateUserUI();
+alert(
+data.error ||
+"Signup failed."
+);
 
-    alert(
-      "Account created successfully!"
-    );
+return;
 
-  }catch(error){
+}
 
-    console.error(error);
+currentUser =
+data.user;
 
-    alert(
-      "Unable to connect to server."
-    );
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(
+currentUser
+)
+);
 
-  }
+closeModal(
+"signupModal"
+);
+
+updateUserUI();
+
+alert(
+"Account created successfully!"
+);
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to server."
+);
+
+}
 
 }
 
@@ -1052,89 +1192,98 @@ async function signup(){
 
 async function login(){
 
-  const email =
-    document.getElementById(
-      "loginEmail"
-    ).value.trim();
+const email =
+document.getElementById(
+"loginEmail"
+).value.trim();
 
-  const password =
-    document.getElementById(
-      "loginPassword"
-    ).value;
+const password =
+document.getElementById(
+"loginPassword"
+).value;
 
-  if(
-    !email ||
-    !password
-  ){
+if(
+!email ||
+!password
+){
 
-    alert(
-      "Please enter email and password."
-    );
+alert(
+"Please enter email and password."
+);
 
-    return;
+return;
 
-  }
+}
 
-  try{
+try{
 
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+headers:{
+"Content-Type":
+"application/json"
+},
 
-          body:JSON.stringify({
-            action:"login",
-            email:email,
-            password:password
-          })
-        }
-      );
+body:JSON.stringify({
 
-    const data =
-      await response.json();
+action:"login",
 
-    if(!data.success){
+email:email,
 
-      alert(
-        data.error ||
-        "Login failed."
-      );
+password:password
 
-      return;
+})
 
-    }
+}
+);
 
-    currentUser =
-      data.user;
+const data =
+await response.json();
 
-    localStorage.setItem(
-      "earnhubUser",
-      JSON.stringify(currentUser)
-    );
+if(!data.success){
 
-    closeModal("loginModal");
+alert(
+data.error ||
+"Login failed."
+);
 
-    updateUserUI();
+return;
 
-    alert(
-      "Login successful!"
-    );
+}
 
-  }catch(error){
+currentUser =
+data.user;
 
-    console.error(error);
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(
+currentUser
+)
+);
 
-    alert(
-      "Unable to connect to server."
-    );
+closeModal(
+"loginModal"
+);
 
-  }
+updateUserUI();
+
+alert(
+"Login successful!"
+);
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to server."
+);
+
+}
 
 }
 
@@ -1145,13 +1294,14 @@ async function login(){
 
 function logout(){
 
-  localStorage.removeItem(
-    "earnhubUser"
-  );
+localStorage.removeItem(
+"earnhubUser"
+);
 
-  currentUser = null;
+currentUser =
+null;
 
-  updateUserUI();
+updateUserUI();
 
 }
 
@@ -1162,75 +1312,80 @@ function logout(){
 
 function updateUserUI(){
 
-  const loginButton =
-    document.getElementById(
-      "loginButton"
-    );
+const loginButton =
+document.getElementById(
+"loginButton"
+);
 
-  const signupButton =
-    document.getElementById(
-      "signupButton"
-    );
+const signupButton =
+document.getElementById(
+"signupButton"
+);
 
-  const userArea =
-    document.getElementById(
-      "userArea"
-    );
+const userArea =
+document.getElementById(
+"userArea"
+);
 
-  const username =
-    document.getElementById(
-      "usernameDisplay"
-    );
+const username =
+document.getElementById(
+"usernameDisplay"
+);
 
-  if(currentUser){
+if(currentUser){
 
-    loginButton.style.display =
-      "none";
+loginButton.style.display =
+"none";
 
-    signupButton.style.display =
-      "none";
+signupButton.style.display =
+"none";
 
-    userArea.style.display =
-      "flex";
+userArea.style.display =
+"flex";
 
-    username.textContent =
-      "Hi, " +
-      currentUser.name;
+username.textContent =
+"Hi, " +
+currentUser.name;
 
-    updateBalance();
+updateBalance();
 
-  }else{
+}else{
 
-    loginButton.style.display =
-      "inline-block";
+loginButton.style.display =
+"inline-block";
 
-    signupButton.style.display =
-      "inline-block";
+signupButton.style.display =
+"inline-block";
 
-    userArea.style.display =
-      "none";
+userArea.style.display =
+"none";
 
-    document.getElementById(
-      "balance"
-    ).textContent = "0.00";
+document.getElementById(
+"balance"
+).textContent =
+"0.00";
 
-    document.getElementById(
-      "heroBalance"
-    ).textContent = "0.00";
+document.getElementById(
+"heroBalance"
+).textContent =
+"0.00";
 
-    document.getElementById(
-      "totalEarned"
-    ).textContent = "0.00";
+document.getElementById(
+"totalEarned"
+).textContent =
+"0.00";
 
-    document.getElementById(
-      "referralEarnings"
-    ).textContent = "0.00";
+document.getElementById(
+"referralEarnings"
+).textContent =
+"0.00";
 
-    document.getElementById(
-      "withdrawBalance"
-    ).textContent = "0.00";
+document.getElementById(
+"withdrawBalance"
+).textContent =
+"0.00";
 
-  }
+}
 
 }
 
@@ -1241,48 +1396,55 @@ function updateUserUI(){
 
 function updateBalance(){
 
-  if(!currentUser)
-    return;
+if(!currentUser)
+return;
 
-  const balance =
-    Number(
-      currentUser.balance || 0
-    );
+const balance =
+Number(
+currentUser.balance || 0
+);
 
-  const total =
-    Number(
-      currentUser.total_earned || 0
-    );
+const total =
+Number(
+currentUser.total_earned || 0
+);
 
-  const referral =
-    Number(
-      currentUser.referral_earnings || 0
-    );
+const referral =
+Number(
+currentUser.referral_earnings || 0
+);
 
-  document.getElementById(
-    "balance"
-  ).textContent =
-    balance.toFixed(2);
+document.getElementById(
+"balance"
+).textContent =
+balance.toFixed(2);
 
-  document.getElementById(
-    "heroBalance"
-  ).textContent =
-    balance.toFixed(2);
+document.getElementById(
+"heroBalance"
+).textContent =
+balance.toFixed(2);
 
-  document.getElementById(
-    "totalEarned"
-  ).textContent =
-    total.toFixed(2);
+document.getElementById(
+"totalEarned"
+).textContent =
+total.toFixed(2);
 
-  document.getElementById(
-    "referralEarnings"
-  ).textContent =
-    referral.toFixed(2);
+document.getElementById(
+"referralEarnings"
+).textContent =
+referral.toFixed(2);
 
-  document.getElementById(
-    "withdrawBalance"
-  ).textContent =
-    balance.toFixed(2);
+const withdrawBalance =
+document.getElementById(
+"withdrawBalance"
+);
+
+if(withdrawBalance){
+
+withdrawBalance.textContent =
+balance.toFixed(2);
+
+}
 
 }
 
@@ -1293,244 +1455,341 @@ function updateBalance(){
 
 async function withdrawMoney(){
 
-  if(!currentUser){
+if(!currentUser){
 
-    alert(
-      "Please login first."
-    );
+alert(
+"Please login first."
+);
 
-    openLogin();
-    return;
+openLogin();
 
-  }
+return;
 
-  const method =
-    document.getElementById(
-      "withdrawMethod"
-    ).value;
+}
 
-  const account =
-    document.getElementById(
-      "withdrawAccount"
-    ).value.trim();
 
-  const amount =
-    Number(
-      document.getElementById(
-        "withdrawAmount"
-      ).value
-    );
+/* GET VALUES */
 
-  const allowedMethods = [
-    "bKash",
-    "Nagad",
-    "Binance",
-    "PayPal",
-    "Bank"
-  ];
+const method =
+document.getElementById(
+"withdrawMethod"
+).value;
 
-  if(!method){
+const account =
+document.getElementById(
+"withdrawAccount"
+).value.trim();
 
-    alert(
-      "Please select a payment method."
-    );
+const amount =
+Number(
+document.getElementById(
+"withdrawAmount"
+).value
+);
 
-    return;
 
-  }
+/* PAYMENT METHODS */
 
-  if(!allowedMethods.includes(method)){
+const allowedMethods = [
+"bKash",
+"Nagad",
+"Binance",
+"PayPal",
+"Bank"
+];
 
-    alert(
-      "Invalid payment method."
-    );
 
-    return;
+/* VALIDATE METHOD */
 
-  }
+if(!method){
 
-  if(!account){
+alert(
+"Please select a payment method."
+);
 
-    alert(
-      "Please enter your account or wallet address."
-    );
+return;
 
-    return;
+}
 
-  }
+if(!allowedMethods.includes(method)){
 
-  if(!Number.isFinite(amount) || amount <= 0){
+alert(
+"Invalid payment method."
+);
 
-    alert(
-      "Please enter a valid amount."
-    );
+return;
 
-    return;
+}
 
-  }
 
-  if(amount < 1){
+/* VALIDATE ACCOUNT */
 
-    alert(
-      "Minimum withdrawal amount is $1."
-    );
+if(!account){
 
-    return;
+alert(
+"Please enter your account or wallet address."
+);
 
-  }
+return;
 
-  const balance =
-    Number(currentUser.balance || 0);
+}
 
-  if(amount > balance){
 
-    alert(
-      "Insufficient balance.\n\n" +
-      "Your balance: $" +
-      balance.toFixed(2)
-    );
+/* VALIDATE AMOUNT */
 
-    return;
+if(!Number.isFinite(amount) || amount <= 0){
 
-  }
+alert(
+"Please enter a valid amount."
+);
 
-  try{
+return;
 
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
+}
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
 
-          body:JSON.stringify({
-            action:"withdraw",
-            userId:Number(currentUser.id),
-            amount:amount,
-            method:method,
-            account:account
-          })
-        }
-      );
+/* MINIMUM */
 
-    const data =
-      await response.json();
+if(amount < 1){
 
-    if(
-      !response.ok ||
-      !data.success
-    ){
+alert(
+"Minimum withdrawal amount is $1."
+);
 
-      alert(
-        data.error ||
-        "Withdrawal request failed."
-      );
+return;
 
-      return;
+}
 
-    }
 
-    currentUser =
-      data.user;
+/* BALANCE */
 
-    localStorage.setItem(
-      "earnhubUser",
-      JSON.stringify(currentUser)
-    );
+const balance =
+Number(
+currentUser.balance || 0
+);
 
-    updateBalance();
+if(amount > balance){
 
-    document.getElementById(
-      "withdrawAmount"
-    ).value = "";
+alert(
+"Insufficient balance.\n\n" +
+"Your balance: $" +
+balance.toFixed(2)
+);
 
-    document.getElementById(
-      "withdrawAccount"
-    ).value = "";
+return;
 
-    document.getElementById(
-      "withdrawMethod"
-    ).value = "";
+}
 
-    alert(
-      "Withdrawal request submitted successfully! ✅\n\n" +
-      "Amount: $" +
-      amount.toFixed(2) +
-      "\nMethod: " +
-      method +
-      "\nAccount: " +
-      account +
-      "\nStatus: Pending"
-    );
 
-  }catch(error){
+/* SEND REQUEST */
 
-    console.error(error);
+try{
 
-    alert(
-      "Unable to connect to EarnHub server."
-    );
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
 
-  }
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+action:"withdraw",
+
+userId:Number(
+currentUser.id
+),
+
+amount:amount,
+
+method:method,
+
+account:account
+
+})
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+/* ERROR */
+
+if(
+!response.ok ||
+!data.success
+){
+
+alert(
+data.error ||
+"Withdrawal request failed."
+);
+
+return;
+
+}
+
+
+/* UPDATED USER */
+
+currentUser =
+data.user;
+
+localStorage.setItem(
+"earnhubUser",
+JSON.stringify(
+currentUser
+)
+);
+
+
+/* UPDATE BALANCE */
+
+updateBalance();
+
+
+/* CLEAR FORM */
+
+document.getElementById(
+"withdrawAmount"
+).value =
+"";
+
+document.getElementById(
+"withdrawAccount"
+).value =
+"";
+
+document.getElementById(
+"withdrawMethod"
+).value =
+"";
+
+
+/* SUCCESS */
+
+alert(
+"Withdrawal request submitted successfully! ✅\n\n" +
+
+"Amount: $" +
+amount.toFixed(2) +
+
+"\nMethod: " +
+method +
+
+"\nAccount: " +
+account +
+
+"\nStatus: Pending"
+);
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Unable to connect to EarnHub server."
+);
+
+}
 
 }
 
 
 /* =====================================
-   MODALS
+   LOGIN MODAL
 ===================================== */
 
 function openLogin(){
 
-  document.getElementById(
-    "loginModal"
-  ).style.display = "flex";
+document.getElementById(
+"loginModal"
+).style.display =
+"flex";
 
 }
+
+
+/* =====================================
+   SIGNUP MODAL
+===================================== */
 
 function openSignup(){
 
-  document.getElementById(
-    "signupModal"
-  ).style.display = "flex";
+document.getElementById(
+"signupModal"
+).style.display =
+"flex";
 
 }
+
+
+/* =====================================
+   AI MODAL
+===================================== */
 
 function openAI(){
 
-  document.getElementById(
-    "aiModal"
-  ).style.display = "flex";
+document.getElementById(
+"aiModal"
+).style.display =
+"flex";
 
-  document.getElementById(
-    "aiQuestion"
-  ).focus();
+document.getElementById(
+"aiQuestion"
+).focus();
 
 }
+
+
+/* =====================================
+   CLOSE MODAL
+===================================== */
 
 function closeModal(id){
 
-  document.getElementById(
-    id
-  ).style.display = "none";
+document.getElementById(
+id
+).style.display =
+"none";
 
 }
+
+
+/* =====================================
+   SWITCH LOGIN → SIGNUP
+===================================== */
 
 function switchToSignup(){
 
-  closeModal("loginModal");
-  openSignup();
+closeModal(
+"loginModal"
+);
+
+openSignup();
 
 }
 
+
+/* =====================================
+   SWITCH SIGNUP → LOGIN
+===================================== */
+
 function switchToLogin(){
 
-  closeModal("signupModal");
-  openLogin();
+closeModal(
+"signupModal"
+);
+
+openLogin();
 
 }
 
@@ -1541,83 +1800,87 @@ function switchToLogin(){
 
 async function askAI(){
 
-  const question =
-    document.getElementById(
-      "aiQuestion"
-    ).value.trim();
+const question =
+document.getElementById(
+"aiQuestion"
+).value.trim();
 
-  const answer =
-    document.getElementById(
-      "aiAnswer"
-    );
+const answer =
+document.getElementById(
+"aiAnswer"
+);
 
-  if(!question){
+if(!question){
 
-    answer.textContent =
-      "Please enter your question.";
+answer.textContent =
+"Please enter your question.";
 
-    return;
+return;
 
-  }
+}
 
-  answer.textContent =
-    "🤖 EarnHub AI is thinking...";
+answer.innerHTML =
+"🤖 EarnHub AI is thinking...";
 
-  try{
+try{
 
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+headers:{
+"Content-Type":
+"application/json"
+},
 
-          body:JSON.stringify({
-            action:"ai",
-            message:question
-          })
-        }
-      );
+body:JSON.stringify({
 
-    const data =
-      await response.json();
+action:"ai",
 
-    if(
-      !response.ok ||
-      !data.success
-    ){
+message:question
 
-      answer.innerHTML =
-        "<strong>Error:</strong><br>" +
-        escapeHTML(
-          data.error ||
-          "AI request failed."
-        );
+})
 
-      return;
+}
+);
 
-    }
+const data =
+await response.json();
 
-    answer.innerHTML =
-      "<strong>🤖 EarnHub AI:</strong><br><br>" +
-      escapeHTML(
-        data.reply ||
-        "No answer received."
-      );
+if(
+!response.ok ||
+!data.success
+){
 
-  }catch(error){
+answer.innerHTML =
+"<strong>Error:</strong><br>" +
+escapeHTML(
+data.error ||
+"AI request failed."
+);
 
-    console.error(error);
+return;
 
-    answer.innerHTML =
-      "<strong>Error:</strong><br>" +
-      "Unable to connect to EarnHub AI.";
+}
 
-  }
+answer.innerHTML =
+"<strong>🤖 EarnHub AI:</strong><br><br>" +
+escapeHTML(
+data.reply ||
+"No answer received."
+);
+
+}catch(error){
+
+console.error(error);
+
+answer.innerHTML =
+"<strong>Error:</strong><br>" +
+"Unable to connect to EarnHub AI.";
+
+}
 
 }
 
@@ -1628,13 +1891,15 @@ async function askAI(){
 
 function escapeHTML(text){
 
-  const div =
-    document.createElement("div");
+const div =
+document.createElement(
+"div"
+);
 
-  div.textContent =
-    String(text);
+div.textContent =
+String(text);
 
-  return div.innerHTML;
+return div.innerHTML;
 
 }
 
@@ -1644,25 +1909,27 @@ function escapeHTML(text){
 ===================================== */
 
 window.addEventListener(
-  "click",
-  function(event){
+"click",
+function(event){
 
-    document
-      .querySelectorAll(".modal")
-      .forEach(
-        function(modal){
+document
+.querySelectorAll(".modal")
+.forEach(
+function(modal){
 
-          if(event.target === modal){
+if(
+event.target === modal
+){
 
-            modal.style.display =
-              "none";
+modal.style.display =
+"none";
 
-          }
+}
 
-        }
-      );
+}
+);
 
-  }
+}
 );
 
 </script>
