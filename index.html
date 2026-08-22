@@ -35,14 +35,9 @@ header{
   color:#22c55e;
 }
 
-nav{
-  display:flex;
-  align-items:center;
-  gap:7px;
-}
-
 nav button{
   padding:10px 16px;
+  margin-left:7px;
   border:none;
   border-radius:8px;
   cursor:pointer;
@@ -177,37 +172,54 @@ nav button{
   background:#1d4ed8;
 }
 
-.withdraw-section{
-  margin-top:40px;
+/* =========================
+   WITHDRAW
+========================= */
+
+.withdraw-card{
   background:white;
   padding:25px;
-  border-radius:15px;
+  border-radius:14px;
   box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
-.withdraw-section h2{
-  margin-bottom:10px;
-}
-
-.withdraw-section p{
-  color:#666;
+.withdraw-balance{
+  background:#ecfdf5;
+  border:1px solid #bbf7d0;
+  padding:18px;
+  border-radius:10px;
   margin-bottom:20px;
 }
 
-.withdraw-btn{
+.withdraw-balance strong{
+  color:#16a34a;
+  font-size:25px;
+}
+
+select,
+input{
   width:100%;
-  padding:13px;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:15px;
+}
+
+.form-btn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
   border:none;
   border-radius:8px;
-  background:#16a34a;
+  background:#22c55e;
   color:white;
   cursor:pointer;
   font-weight:bold;
-  font-size:16px;
 }
 
-.withdraw-btn:hover{
-  background:#15803d;
+.form-btn:hover{
+  background:#16a34a;
 }
 
 .ai{
@@ -261,8 +273,6 @@ footer{
   padding:25px;
   border-radius:15px;
   position:relative;
-  max-height:90vh;
-  overflow-y:auto;
 }
 
 .close{
@@ -273,28 +283,6 @@ footer{
   cursor:pointer;
 }
 
-input,
-select{
-  width:100%;
-  padding:12px;
-  margin:7px 0;
-  border:1px solid #ddd;
-  border-radius:8px;
-  background:white;
-}
-
-.form-btn{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:8px;
-  background:#22c55e;
-  color:white;
-  cursor:pointer;
-  font-weight:bold;
-}
-
 .switch{
   text-align:center;
   margin-top:15px;
@@ -302,17 +290,9 @@ select{
   cursor:pointer;
 }
 
-.withdraw-info{
-  background:#f3f4f6;
-  padding:12px;
-  border-radius:8px;
-  margin:10px 0;
-}
-
 #userArea{
   display:none;
   align-items:center;
-  gap:7px;
 }
 
 @media(max-width:600px){
@@ -333,10 +313,6 @@ select{
     padding:8px 10px;
   }
 
-  #usernameDisplay{
-    font-size:13px;
-  }
-
 }
 
 </style>
@@ -344,7 +320,9 @@ select{
 
 <body>
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
@@ -385,7 +363,9 @@ Logout
 </header>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -405,7 +385,9 @@ Wallet: $<span id="heroBalance">0.00</span>
 </section>
 
 
-<!-- PLATFORM -->
+<!-- =========================
+     PLATFORM
+========================= -->
 
 <div class="container">
 
@@ -455,7 +437,9 @@ Earn commissions through referrals.
 </div>
 
 
-<!-- DASHBOARD -->
+<!-- =========================
+     DASHBOARD
+========================= -->
 
 <div class="container">
 
@@ -466,65 +450,144 @@ Dashboard
 <div class="stats">
 
 <div class="stat">
-<h4>Balance</h4>
+
+<h4>
+Balance
+</h4>
+
 <strong>
 $<span id="balance">0.00</span>
 </strong>
+
 </div>
 
+
 <div class="stat">
-<h4>Total Earned</h4>
+
+<h4>
+Total Earned
+</h4>
+
 <strong>
 $<span id="totalEarned">0.00</span>
 </strong>
+
 </div>
 
+
 <div class="stat">
-<h4>Referral Earnings</h4>
+
+<h4>
+Referral Earnings
+</h4>
+
 <strong>
 $<span id="referralEarnings">0.00</span>
 </strong>
+
 </div>
 
+
 <div class="stat">
-<h4>Tasks</h4>
+
+<h4>
+Tasks
+</h4>
+
 <strong id="taskCount">
 0
 </strong>
+
+</div>
+
 </div>
 
 </div>
 
 
-<!-- WITHDRAW -->
+<!-- =========================
+     WITHDRAW
+========================= -->
 
-<div class="withdraw-section">
+<div class="container">
 
-<h2>
+<h2 class="title">
 💰 Withdraw Money
 </h2>
 
-<p>
-Minimum withdrawal amount is $1.00.
-</p>
+<div class="withdraw-card">
+
+<div class="withdraw-balance">
+
+Available Balance:
+
+<br>
+
+<strong>
+$<span id="withdrawBalance">0.00</span>
+</strong>
+
+</div>
+
+
+<select id="withdrawMethod">
+
+<option value="">
+Select Payment Method
+</option>
+
+<option value="Binance">
+Binance
+</option>
+
+<option value="PayPal">
+PayPal
+</option>
+
+<option value="Bank">
+Bank
+</option>
+
+</select>
+
+
+<input
+type="text"
+id="withdrawAccount"
+placeholder="Account / Wallet Address"
+>
+
+
+<input
+type="number"
+id="withdrawAmount"
+placeholder="Amount"
+min="1"
+step="0.01"
+>
+
 
 <button
-class="withdraw-btn"
-onclick="openWithdraw()">
-Withdraw Balance
+class="form-btn"
+onclick="withdrawMoney()">
+
+Request Withdrawal
+
 </button>
 
 </div>
 
+</div>
 
-<!-- TASKS -->
 
-<h2
-class="title"
-style="margin-top:40px;">
+<!-- =========================
+     TASKS
+========================= -->
 
+<div class="container">
+
+<h2 class="title">
 Available Tasks
-
 </h2>
 
 <div
@@ -538,7 +601,9 @@ Loading tasks...
 </div>
 
 
-<!-- AI -->
+<!-- =========================
+     AI
+========================= -->
 
 <div class="ai">
 
@@ -560,14 +625,20 @@ Ask AI
 </div>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
+
 © 2026 EarnHub — MVP concept
+
 </footer>
 
 
-<!-- LOGIN MODAL -->
+<!-- =========================
+     LOGIN MODAL
+========================= -->
 
 <div
 class="modal"
@@ -588,12 +659,14 @@ Login
 <input
 type="email"
 id="loginEmail"
-placeholder="Email">
+placeholder="Email"
+>
 
 <input
 type="password"
 id="loginPassword"
-placeholder="Password">
+placeholder="Password"
+>
 
 <button
 class="form-btn"
@@ -615,7 +688,9 @@ Sign Up
 </div>
 
 
-<!-- SIGNUP MODAL -->
+<!-- =========================
+     SIGNUP MODAL
+========================= -->
 
 <div
 class="modal"
@@ -636,22 +711,27 @@ Create Account
 <input
 type="text"
 id="signupName"
-placeholder="Full Name">
+placeholder="Full Name"
+>
 
 <input
 type="email"
 id="signupEmail"
-placeholder="Email">
+placeholder="Email"
+>
 
 <input
 type="password"
 id="signupPassword"
-placeholder="Password">
+placeholder="Password"
+>
 
 <button
 class="form-btn"
 onclick="signup()">
+
 Create Account
+
 </button>
 
 <div
@@ -668,81 +748,9 @@ Login
 </div>
 
 
-<!-- WITHDRAW MODAL -->
-
-<div
-class="modal"
-id="withdrawModal">
-
-<div class="modal-box">
-
-<span
-class="close"
-onclick="closeModal('withdrawModal')">
-×
-</span>
-
-<h2>
-💰 Withdraw
-</h2>
-
-<div class="withdraw-info">
-
-Available Balance:
-<strong>
-$<span id="withdrawBalance">
-0.00
-</span>
-</strong>
-
-</div>
-
-<input
-type="number"
-id="withdrawAmount"
-placeholder="Amount"
-min="1"
-step="0.01">
-
-<select id="withdrawMethod">
-
-<option value="">
-Select payment method
-</option>
-
-<option value="bKash">
-bKash
-</option>
-
-<option value="Nagad">
-Nagad
-</option>
-
-<option value="Bank">
-Bank Account
-</option>
-
-</select>
-
-<input
-type="text"
-id="withdrawAccount"
-placeholder="Account / Number">
-
-<button
-class="form-btn"
-onclick="withdraw()">
-
-Submit Withdrawal
-
-</button>
-
-</div>
-
-</div>
-
-
-<!-- AI MODAL -->
+<!-- =========================
+     AI MODAL
+========================= -->
 
 <div
 class="modal"
@@ -767,12 +775,15 @@ Ask EarnHub AI anything about earning online.
 <input
 type="text"
 id="aiQuestion"
-placeholder="Ask something...">
+placeholder="Ask something..."
+>
 
 <button
 class="form-btn"
 onclick="askAI()">
+
 Ask AI
+
 </button>
 
 <div
@@ -968,6 +979,7 @@ return;
 
 }
 
+
 try{
 
 const response =
@@ -994,8 +1006,10 @@ taskId:taskId
 }
 );
 
+
 const data =
 await response.json();
+
 
 if(
 !response.ok ||
@@ -1011,8 +1025,10 @@ return;
 
 }
 
+
 currentUser =
 data.user;
+
 
 localStorage.setItem(
 "earnhubUser",
@@ -1021,7 +1037,9 @@ currentUser
 )
 );
 
+
 updateBalance();
+
 
 alert(
 "Task completed successfully! 🎉\n\n" +
@@ -1030,6 +1048,7 @@ Number(data.reward).toFixed(2) +
 "\n\nNew Balance: $" +
 Number(currentUser.balance).toFixed(2)
 );
+
 
 }catch(error){
 
@@ -1065,6 +1084,7 @@ document.getElementById(
 "signupPassword"
 ).value;
 
+
 if(
 !name ||
 !email ||
@@ -1079,6 +1099,7 @@ return;
 
 }
 
+
 if(password.length < 6){
 
 alert(
@@ -1088,6 +1109,7 @@ alert(
 return;
 
 }
+
 
 try{
 
@@ -1117,8 +1139,10 @@ password:password
 }
 );
 
+
 const data =
 await response.json();
+
 
 if(!data.success){
 
@@ -1131,8 +1155,10 @@ return;
 
 }
 
+
 currentUser =
 data.user;
+
 
 localStorage.setItem(
 "earnhubUser",
@@ -1141,15 +1167,18 @@ currentUser
 )
 );
 
+
 closeModal(
 "signupModal"
 );
 
 updateUserUI();
 
+
 alert(
 "Account created successfully!"
 );
+
 
 }catch(error){
 
@@ -1180,6 +1209,7 @@ document.getElementById(
 "loginPassword"
 ).value;
 
+
 if(
 !email ||
 !password
@@ -1192,6 +1222,7 @@ alert(
 return;
 
 }
+
 
 try{
 
@@ -1219,8 +1250,10 @@ password:password
 }
 );
 
+
 const data =
 await response.json();
+
 
 if(!data.success){
 
@@ -1233,8 +1266,10 @@ return;
 
 }
 
+
 currentUser =
 data.user;
+
 
 localStorage.setItem(
 "earnhubUser",
@@ -1243,15 +1278,18 @@ currentUser
 )
 );
 
+
 closeModal(
 "loginModal"
 );
 
 updateUserUI();
 
+
 alert(
 "Login successful!"
 );
+
 
 }catch(error){
 
@@ -1310,6 +1348,7 @@ document.getElementById(
 "usernameDisplay"
 );
 
+
 if(currentUser){
 
 loginButton.style.display =
@@ -1358,6 +1397,11 @@ document.getElementById(
 ).textContent =
 "0.00";
 
+document.getElementById(
+"withdrawBalance"
+).textContent =
+"0.00";
+
 }
 
 }
@@ -1371,6 +1415,7 @@ function updateBalance(){
 
 if(!currentUser)
 return;
+
 
 const balance =
 Number(
@@ -1387,91 +1432,44 @@ Number(
 currentUser.referral_earnings || 0
 );
 
+
 document.getElementById(
 "balance"
 ).textContent =
 balance.toFixed(2);
+
 
 document.getElementById(
 "heroBalance"
 ).textContent =
 balance.toFixed(2);
 
+
 document.getElementById(
 "totalEarned"
 ).textContent =
 total.toFixed(2);
+
 
 document.getElementById(
 "referralEarnings"
 ).textContent =
 referral.toFixed(2);
 
+
+/* Withdraw Balance */
+
+const withdrawBalance =
 document.getElementById(
 "withdrawBalance"
-).textContent =
+);
+
+if(withdrawBalance){
+
+withdrawBalance.textContent =
 balance.toFixed(2);
 
 }
-
-
-/* =====================================
-   OPEN LOGIN
-===================================== */
-
-function openLogin(){
-
-document.getElementById(
-"loginModal"
-).style.display =
-"flex";
-
-}
-
-
-/* =====================================
-   OPEN SIGNUP
-===================================== */
-
-function openSignup(){
-
-document.getElementById(
-"signupModal"
-).style.display =
-"flex";
-
-}
-
-
-/* =====================================
-   OPEN WITHDRAW
-===================================== */
-
-function openWithdraw(){
-
-if(!currentUser){
-
-alert(
-"Please login first to withdraw."
-);
-
-openLogin();
-
-return;
-
-}
-
-document.getElementById(
-"withdrawBalance"
-).textContent =
-Number(
-currentUser.balance || 0
-).toFixed(2);
-
-document.getElementById(
-"withdrawModal"
-).style.display =
-"flex";
 
 }
 
@@ -1480,7 +1478,7 @@ document.getElementById(
    WITHDRAW
 ===================================== */
 
-async function withdraw(){
+async function withdrawMoney(){
 
 if(!currentUser){
 
@@ -1488,16 +1486,12 @@ alert(
 "Please login first."
 );
 
+openLogin();
+
 return;
 
 }
 
-const amount =
-Number(
-document.getElementById(
-"withdrawAmount"
-).value
-);
 
 const method =
 document.getElementById(
@@ -1509,15 +1503,46 @@ document.getElementById(
 "withdrawAccount"
 ).value.trim();
 
-if(!amount){
+const amount =
+Number(
+document.getElementById(
+"withdrawAmount"
+).value
+);
+
+
+if(!method){
 
 alert(
-"Please enter withdrawal amount."
+"Please select a payment method."
 );
 
 return;
 
 }
+
+
+if(!account){
+
+alert(
+"Please enter your account or wallet address."
+);
+
+return;
+
+}
+
+
+if(!amount || amount <= 0){
+
+alert(
+"Please enter a valid amount."
+);
+
+return;
+
+}
+
 
 if(amount < 1){
 
@@ -1529,40 +1554,25 @@ return;
 
 }
 
-if(!method){
-
-alert(
-"Please select payment method."
-);
-
-return;
-
-}
-
-if(!account){
-
-alert(
-"Please enter your account number."
-);
-
-return;
-
-}
 
 const balance =
 Number(
 currentUser.balance || 0
 );
 
+
 if(amount > balance){
 
 alert(
-"Insufficient balance."
+"Insufficient balance.\n\n" +
+"Your balance: $" +
+balance.toFixed(2)
 );
 
 return;
 
 }
+
 
 try{
 
@@ -1596,8 +1606,10 @@ account:account
 }
 );
 
+
 const data =
 await response.json();
+
 
 if(
 !response.ok ||
@@ -1606,17 +1618,19 @@ if(
 
 alert(
 data.error ||
-"Withdrawal failed."
+"Withdrawal request failed."
 );
 
 return;
 
 }
 
-/* UPDATED USER */
+
+/* Updated User */
 
 currentUser =
 data.user;
+
 
 localStorage.setItem(
 "earnhubUser",
@@ -1625,39 +1639,37 @@ currentUser
 )
 );
 
+
 updateBalance();
+
 
 document.getElementById(
 "withdrawAmount"
 ).value =
 "";
 
-document.getElementById(
-"withdrawMethod"
-).value =
-"";
 
 document.getElementById(
 "withdrawAccount"
 ).value =
 "";
 
-closeModal(
-"withdrawModal"
-);
+
+document.getElementById(
+"withdrawMethod"
+).value =
+"";
+
 
 alert(
-"Withdrawal request submitted successfully! 🎉\n\n" +
+"Withdrawal request submitted successfully! ✅\n\n" +
 "Amount: $" +
-Number(
-data.withdrawal.amount
-).toFixed(2) +
-"\n" +
-"Method: " +
-data.withdrawal.method +
-"\n" +
-"Status: Pending"
+amount.toFixed(2) +
+"\nMethod: " +
+method +
+"\nStatus: Pending"
 );
+
 
 }catch(error){
 
@@ -1673,7 +1685,35 @@ alert(
 
 
 /* =====================================
-   OPEN AI
+   LOGIN MODAL
+===================================== */
+
+function openLogin(){
+
+document.getElementById(
+"loginModal"
+).style.display =
+"flex";
+
+}
+
+
+/* =====================================
+   SIGNUP MODAL
+===================================== */
+
+function openSignup(){
+
+document.getElementById(
+"signupModal"
+).style.display =
+"flex";
+
+}
+
+
+/* =====================================
+   AI MODAL
 ===================================== */
 
 function openAI(){
@@ -1750,6 +1790,7 @@ document.getElementById(
 "aiAnswer"
 );
 
+
 if(!question){
 
 answer.textContent =
@@ -1759,8 +1800,10 @@ return;
 
 }
 
+
 answer.innerHTML =
 "🤖 EarnHub AI is thinking...";
+
 
 try{
 
@@ -1786,8 +1829,10 @@ message:question
 }
 );
 
+
 const data =
 await response.json();
+
 
 if(
 !response.ok ||
@@ -1805,12 +1850,14 @@ return;
 
 }
 
+
 answer.innerHTML =
 "<strong>🤖 EarnHub AI:</strong><br><br>" +
 escapeHTML(
 data.reply ||
 "No answer received."
 );
+
 
 }catch(error){
 
