@@ -461,7 +461,6 @@ $<span id="balance">0.00</span>
 
 </div>
 
-
 <div class="stat">
 
 <h4>
@@ -474,7 +473,6 @@ $<span id="totalEarned">0.00</span>
 
 </div>
 
-
 <div class="stat">
 
 <h4>
@@ -486,7 +484,6 @@ $<span id="referralEarnings">0.00</span>
 </strong>
 
 </div>
-
 
 <div class="stat">
 
@@ -530,10 +527,20 @@ $<span id="withdrawBalance">0.00</span>
 </div>
 
 
+<!-- PAYMENT METHOD -->
+
 <select id="withdrawMethod">
 
 <option value="">
 Select Payment Method
+</option>
+
+<option value="bKash">
+bKash
+</option>
+
+<option value="Nagad">
+Nagad
 </option>
 
 <option value="Binance">
@@ -551,12 +558,16 @@ Bank
 </select>
 
 
+<!-- ACCOUNT -->
+
 <input
 type="text"
 id="withdrawAccount"
-placeholder="Account / Wallet Address"
+placeholder="bKash / Nagad Number / Wallet / Account"
 >
 
+
+<!-- AMOUNT -->
 
 <input
 type="number"
@@ -979,7 +990,6 @@ return;
 
 }
 
-
 try{
 
 const response =
@@ -1006,10 +1016,8 @@ taskId:taskId
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(
 !response.ok ||
@@ -1025,10 +1033,8 @@ return;
 
 }
 
-
 currentUser =
 data.user;
-
 
 localStorage.setItem(
 "earnhubUser",
@@ -1037,9 +1043,7 @@ currentUser
 )
 );
 
-
 updateBalance();
-
 
 alert(
 "Task completed successfully! 🎉\n\n" +
@@ -1048,7 +1052,6 @@ Number(data.reward).toFixed(2) +
 "\n\nNew Balance: $" +
 Number(currentUser.balance).toFixed(2)
 );
-
 
 }catch(error){
 
@@ -1084,7 +1087,6 @@ document.getElementById(
 "signupPassword"
 ).value;
 
-
 if(
 !name ||
 !email ||
@@ -1099,7 +1101,6 @@ return;
 
 }
 
-
 if(password.length < 6){
 
 alert(
@@ -1109,7 +1110,6 @@ alert(
 return;
 
 }
-
 
 try{
 
@@ -1139,10 +1139,8 @@ password:password
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(!data.success){
 
@@ -1155,10 +1153,8 @@ return;
 
 }
 
-
 currentUser =
 data.user;
-
 
 localStorage.setItem(
 "earnhubUser",
@@ -1167,18 +1163,15 @@ currentUser
 )
 );
 
-
 closeModal(
 "signupModal"
 );
 
 updateUserUI();
 
-
 alert(
 "Account created successfully!"
 );
-
 
 }catch(error){
 
@@ -1209,7 +1202,6 @@ document.getElementById(
 "loginPassword"
 ).value;
 
-
 if(
 !email ||
 !password
@@ -1222,7 +1214,6 @@ alert(
 return;
 
 }
-
 
 try{
 
@@ -1250,10 +1241,8 @@ password:password
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(!data.success){
 
@@ -1266,10 +1255,8 @@ return;
 
 }
 
-
 currentUser =
 data.user;
-
 
 localStorage.setItem(
 "earnhubUser",
@@ -1278,18 +1265,15 @@ currentUser
 )
 );
 
-
 closeModal(
 "loginModal"
 );
 
 updateUserUI();
 
-
 alert(
 "Login successful!"
 );
-
 
 }catch(error){
 
@@ -1347,7 +1331,6 @@ const username =
 document.getElementById(
 "usernameDisplay"
 );
-
 
 if(currentUser){
 
@@ -1416,7 +1399,6 @@ function updateBalance(){
 if(!currentUser)
 return;
 
-
 const balance =
 Number(
 currentUser.balance || 0
@@ -1432,32 +1414,25 @@ Number(
 currentUser.referral_earnings || 0
 );
 
-
 document.getElementById(
 "balance"
 ).textContent =
 balance.toFixed(2);
-
 
 document.getElementById(
 "heroBalance"
 ).textContent =
 balance.toFixed(2);
 
-
 document.getElementById(
 "totalEarned"
 ).textContent =
 total.toFixed(2);
 
-
 document.getElementById(
 "referralEarnings"
 ).textContent =
 referral.toFixed(2);
-
-
-/* Withdraw Balance */
 
 const withdrawBalance =
 document.getElementById(
@@ -1475,7 +1450,7 @@ balance.toFixed(2);
 
 
 /* =====================================
-   WITHDRAW
+   WITHDRAW MONEY
 ===================================== */
 
 async function withdrawMoney(){
@@ -1492,6 +1467,8 @@ return;
 
 }
 
+
+/* GET VALUES */
 
 const method =
 document.getElementById(
@@ -1511,6 +1488,19 @@ document.getElementById(
 );
 
 
+/* PAYMENT METHODS */
+
+const allowedMethods = [
+"bKash",
+"Nagad",
+"Binance",
+"PayPal",
+"Bank"
+];
+
+
+/* VALIDATE METHOD */
+
 if(!method){
 
 alert(
@@ -1521,6 +1511,18 @@ return;
 
 }
 
+if(!allowedMethods.includes(method)){
+
+alert(
+"Invalid payment method."
+);
+
+return;
+
+}
+
+
+/* VALIDATE ACCOUNT */
 
 if(!account){
 
@@ -1533,7 +1535,9 @@ return;
 }
 
 
-if(!amount || amount <= 0){
+/* VALIDATE AMOUNT */
+
+if(!Number.isFinite(amount) || amount <= 0){
 
 alert(
 "Please enter a valid amount."
@@ -1543,6 +1547,8 @@ return;
 
 }
 
+
+/* MINIMUM */
 
 if(amount < 1){
 
@@ -1555,11 +1561,12 @@ return;
 }
 
 
+/* BALANCE */
+
 const balance =
 Number(
 currentUser.balance || 0
 );
-
 
 if(amount > balance){
 
@@ -1573,6 +1580,8 @@ return;
 
 }
 
+
+/* SEND REQUEST */
 
 try{
 
@@ -1611,6 +1620,8 @@ const data =
 await response.json();
 
 
+/* ERROR */
+
 if(
 !response.ok ||
 !data.success
@@ -1626,11 +1637,10 @@ return;
 }
 
 
-/* Updated User */
+/* UPDATED USER */
 
 currentUser =
 data.user;
-
 
 localStorage.setItem(
 "earnhubUser",
@@ -1640,20 +1650,22 @@ currentUser
 );
 
 
+/* UPDATE BALANCE */
+
 updateBalance();
 
+
+/* CLEAR FORM */
 
 document.getElementById(
 "withdrawAmount"
 ).value =
 "";
 
-
 document.getElementById(
 "withdrawAccount"
 ).value =
 "";
-
 
 document.getElementById(
 "withdrawMethod"
@@ -1661,12 +1673,20 @@ document.getElementById(
 "";
 
 
+/* SUCCESS */
+
 alert(
 "Withdrawal request submitted successfully! ✅\n\n" +
+
 "Amount: $" +
 amount.toFixed(2) +
+
 "\nMethod: " +
 method +
+
+"\nAccount: " +
+account +
+
 "\nStatus: Pending"
 );
 
@@ -1790,7 +1810,6 @@ document.getElementById(
 "aiAnswer"
 );
 
-
 if(!question){
 
 answer.textContent =
@@ -1800,10 +1819,8 @@ return;
 
 }
 
-
 answer.innerHTML =
 "🤖 EarnHub AI is thinking...";
-
 
 try{
 
@@ -1829,10 +1846,8 @@ message:question
 }
 );
 
-
 const data =
 await response.json();
-
 
 if(
 !response.ok ||
@@ -1850,14 +1865,12 @@ return;
 
 }
 
-
 answer.innerHTML =
 "<strong>🤖 EarnHub AI:</strong><br><br>" +
 escapeHTML(
 data.reply ||
 "No answer received."
 );
-
 
 }catch(error){
 
